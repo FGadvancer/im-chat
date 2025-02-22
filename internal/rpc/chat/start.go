@@ -2,8 +2,10 @@ package chat
 
 import (
 	"context"
+	"strings"
 	"time"
 
+	"github.com/openimsdk/chat/pkg/common/constant"
 	"github.com/openimsdk/chat/pkg/common/mctx"
 	"github.com/openimsdk/chat/pkg/common/rtc"
 	"github.com/openimsdk/chat/pkg/protocol/admin"
@@ -39,6 +41,9 @@ func Start(ctx context.Context, config *Config, client discovery.SvcDiscoveryReg
 		return err
 	}
 	var srv chatSvr
+	config.RpcConfig.VerifyCode.Phone.Use = strings.ToLower(config.RpcConfig.VerifyCode.Phone.Use)
+	config.RpcConfig.VerifyCode.Mail.Use = strings.ToLower(config.RpcConfig.VerifyCode.Mail.Use)
+	srv.conf = config.RpcConfig.VerifyCode
 	switch config.RpcConfig.VerifyCode.Phone.Use {
 	case "ali":
 		ali := config.RpcConfig.VerifyCode.Phone.Ali
@@ -47,14 +52,14 @@ func Start(ctx context.Context, config *Config, client discovery.SvcDiscoveryReg
 			return err
 		}
 	}
-	if mail := config.RpcConfig.VerifyCode.Mail; mail.Enable {
+	if mail := config.RpcConfig.VerifyCode.Mail; mail.Use == constant.VerifyMail {
 		srv.Mail = email.NewMail(mail.SMTPAddr, mail.SMTPPort, mail.SenderMail, mail.SenderAuthorizationCode, mail.Title)
 	}
 	srv.Database, err = database.NewChatDatabase(mgocli)
 	if err != nil {
 		return err
 	}
-	conn, err := client.GetConn(ctx, config.Share.RpcRegisterName.Admin, grpc.WithTransportCredentials(insecure.NewCredentials()), mw.GrpcClient())
+	conn, err := client.GetConn(ctx, config.Discovery.RpcService.Admin, grpc.WithTransportCredentials(insecure.NewCredentials()), mw.GrpcClient())
 	if err != nil {
 		return err
 	}
@@ -68,11 +73,14 @@ func Start(ctx context.Context, config *Config, client discovery.SvcDiscoveryReg
 		Len:        config.RpcConfig.VerifyCode.Len,
 	}
 	srv.Livekit = rtc.NewLiveKit(config.RpcConfig.LiveKit.Key, config.RpcConfig.LiveKit.Secret, config.RpcConfig.LiveKit.URL)
+	srv.AllowRegister = config.RpcConfig.AllowRegister
 	chat.RegisterChatServer(server, &srv)
 	return nil
 }
 
 type chatSvr struct {
+	chat.UnimplementedChatServer
+	conf            config.VerifyCode
 	Database        database.ChatDatabaseInterface
 	Admin           *chatClient.AdminClient
 	SMS             sms.SMS
@@ -80,6 +88,7 @@ type chatSvr struct {
 	Code            verifyCode
 	Livekit         *rtc.LiveKit
 	ChatAdminUserID string
+	AllowRegister   bool
 }
 
 func (o *chatSvr) WithAdminUser(ctx context.Context) context.Context {

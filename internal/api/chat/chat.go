@@ -22,7 +22,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/openimsdk/chat/pkg/common/apistruct"
-	"github.com/openimsdk/chat/pkg/common/constant"
 	"github.com/openimsdk/chat/pkg/common/imapi"
 	"github.com/openimsdk/chat/pkg/common/mctx"
 	"github.com/openimsdk/chat/pkg/protocol/admin"
@@ -74,7 +73,7 @@ func (o *Api) SendVerifyCode(c *gin.Context) {
 }
 
 func (o *Api) VerifyCode(c *gin.Context) {
-	a2r.Call(chatpb.ChatClient.VerifyCode, o.chatClient, c)
+	a2r.Call(c, chatpb.ChatClient.VerifyCode, o.chatClient)
 }
 
 func (o *Api) RegisterUser(c *gin.Context) {
@@ -132,7 +131,7 @@ func (o *Api) RegisterUser(c *gin.Context) {
 		FaceURL:    req.User.FaceURL,
 		CreateTime: time.Now().UnixMilli(),
 	}
-	err = o.imApiCaller.RegisterUser(c, []*sdkws.UserInfo{userInfo})
+	err = o.imApiCaller.RegisterUser(apiCtx, []*sdkws.UserInfo{userInfo})
 	if err != nil {
 		apiresp.GinError(c, err)
 		return
@@ -146,7 +145,7 @@ func (o *Api) RegisterUser(c *gin.Context) {
 	}
 	var resp apistruct.UserRegisterResp
 	if req.AutoLogin {
-		resp.ImToken, err = o.imApiCaller.UserToken(c, respRegisterUser.UserID, req.Platform)
+		resp.ImToken, err = o.imApiCaller.GetUserToken(apiCtx, respRegisterUser.UserID, req.Platform)
 		if err != nil {
 			apiresp.GinError(c, err)
 			return
@@ -174,7 +173,14 @@ func (o *Api) Login(c *gin.Context) {
 		apiresp.GinError(c, err)
 		return
 	}
-	imToken, err := o.imApiCaller.UserToken(c, resp.UserID, req.Platform)
+	adminToken, err := o.imApiCaller.ImAdminTokenWithDefaultAdmin(c)
+	if err != nil {
+		apiresp.GinError(c, err)
+		return
+	}
+	apiCtx := mctx.WithApiToken(c, adminToken)
+
+	imToken, err := o.imApiCaller.GetUserToken(apiCtx, resp.UserID, req.Platform)
 	if err != nil {
 		apiresp.GinError(c, err)
 		return
@@ -187,7 +193,7 @@ func (o *Api) Login(c *gin.Context) {
 }
 
 func (o *Api) ResetPassword(c *gin.Context) {
-	a2r.Call(chatpb.ChatClient.ResetPassword, o.chatClient, c)
+	a2r.Call(c, chatpb.ChatClient.ResetPassword, o.chatClient)
 }
 
 func (o *Api) ChangePassword(c *gin.Context) {
@@ -228,20 +234,9 @@ func (o *Api) UpdateUserInfo(c *gin.Context) {
 		apiresp.GinError(c, err)
 		return
 	}
-	opUserType, err := mctx.GetUserType(c)
-	if err != nil {
-		apiresp.GinError(c, err)
-		return
-	}
+
 	var imToken string
-	if opUserType == constant.NormalUser {
-		imToken, err = o.imApiCaller.ImAdminTokenWithDefaultAdmin(c)
-	} else if opUserType == constant.AdminUser {
-		imToken, err = o.imApiCaller.UserToken(c, o.GetDefaultIMAdminUserID(), constantpb.AdminPlatformID)
-	} else {
-		apiresp.GinError(c, errs.ErrArgs.WrapMsg("opUserType unknown"))
-		return
-	}
+	imToken, err = o.imApiCaller.ImAdminTokenWithDefaultAdmin(c)
 	if err != nil {
 		apiresp.GinError(c, err)
 		return
@@ -269,35 +264,35 @@ func (o *Api) UpdateUserInfo(c *gin.Context) {
 }
 
 func (o *Api) FindUserPublicInfo(c *gin.Context) {
-	a2r.Call(chatpb.ChatClient.FindUserPublicInfo, o.chatClient, c)
+	a2r.Call(c, chatpb.ChatClient.FindUserPublicInfo, o.chatClient)
 }
 
 func (o *Api) FindUserFullInfo(c *gin.Context) {
-	a2r.Call(chatpb.ChatClient.FindUserFullInfo, o.chatClient, c)
+	a2r.Call(c, chatpb.ChatClient.FindUserFullInfo, o.chatClient)
 }
 
 func (o *Api) SearchUserFullInfo(c *gin.Context) {
-	a2r.Call(chatpb.ChatClient.SearchUserFullInfo, o.chatClient, c)
+	a2r.Call(c, chatpb.ChatClient.SearchUserFullInfo, o.chatClient)
 }
 
 func (o *Api) SearchUserPublicInfo(c *gin.Context) {
-	a2r.Call(chatpb.ChatClient.SearchUserPublicInfo, o.chatClient, c)
+	a2r.Call(c, chatpb.ChatClient.SearchUserPublicInfo, o.chatClient)
 }
 
 func (o *Api) GetTokenForVideoMeeting(c *gin.Context) {
-	a2r.Call(chatpb.ChatClient.GetTokenForVideoMeeting, o.chatClient, c)
+	a2r.Call(c, chatpb.ChatClient.GetTokenForVideoMeeting, o.chatClient)
 }
 
 // ################## APPLET ##################
 
 func (o *Api) FindApplet(c *gin.Context) {
-	a2r.Call(admin.AdminClient.FindApplet, o.adminClient, c)
+	a2r.Call(c, admin.AdminClient.FindApplet, o.adminClient)
 }
 
 // ################## CONFIG ##################
 
 func (o *Api) GetClientConfig(c *gin.Context) {
-	a2r.Call(admin.AdminClient.GetClientConfig, o.adminClient, c)
+	a2r.Call(c, admin.AdminClient.GetClientConfig, o.adminClient)
 }
 
 // ################## CALLBACK ##################
@@ -352,4 +347,12 @@ func (o *Api) SearchFriend(c *gin.Context) {
 		return
 	}
 	apiresp.GinSuccess(c, resp)
+}
+
+func (o *Api) LatestApplicationVersion(c *gin.Context) {
+	a2r.Call(c, admin.AdminClient.LatestApplicationVersion, o.adminClient)
+}
+
+func (o *Api) PageApplicationVersion(c *gin.Context) {
+	a2r.Call(c, admin.AdminClient.PageApplicationVersion, o.adminClient)
 }
