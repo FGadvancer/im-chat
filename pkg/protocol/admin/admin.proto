@@ -540,6 +540,73 @@ message PageApplicationVersionResp {
   repeated ApplicationVersion versions = 2;
 }
 
+message AddEnterpriseInfoReq {
+  string name = 1;
+  string logo = 2;
+  string website = 3;
+  repeated string tags = 4;
+  string address = 5;
+  string phoneNumber = 6;
+  string email = 7;
+}
+
+
+message AddEnterpriseInfoResp {
+  string enterpriseID = 1;
+}
+
+message UpdateEnterpriseInfoReq {
+  string enterpriseID = 1;
+  optional string name = 2;
+  optional string logo = 3;
+  optional string website = 4;
+  repeated string tags = 5;
+  bool clearTags = 6;
+  optional string address = 7;
+  optional string phoneNumber = 8;
+  optional string email = 9;
+}
+
+message UpdateEnterpriseInfoResp {
+
+}
+
+message DeleteEnterpriseInfoReq {
+  string enterpriseID = 1;
+}
+
+message DeleteEnterpriseInfoResp {
+}
+
+message RequestPagination {
+  int32 pageNumber = 1;
+  int32 showNumber = 2;
+}
+
+message GetEnterpriseInfoReq {
+  RequestPagination pagination = 1;
+  string nameKeyword = 4;
+  repeated string tags = 5;
+  string addressKeyword = 6;
+}
+
+message EnterpriseInfo{
+  string enterpriseID = 1;
+  string name = 2;
+  string logo = 3;
+  string website = 4;
+  string tags = 5;
+  string address = 7;
+  string phoneNumber = 8;
+  string email = 9;
+  string createTime = 10;
+}
+
+message GetEnterpriseInfoResp {
+  repeated EnterpriseInfo enterprises = 1;
+  int32 total = 2;
+}
+
 
 service admin {
   // Login
@@ -619,4 +686,8 @@ service admin {
   rpc UpdateApplicationVersion(UpdateApplicationVersionReq) returns (UpdateApplicationVersionResp);
   rpc DeleteApplicationVersion(DeleteApplicationVersionReq) returns (DeleteApplicationVersionResp);
   rpc PageApplicationVersion(PageApplicationVersionReq) returns (PageApplicationVersionResp);
+  rpc AddEnterpriseInfo(AddEnterpriseInfoReq) returns (AddEnterpriseInfoResp);
+  rpc UpdateEnterpriseInfo(UpdateEnterpriseInfoReq) returns (UpdateEnterpriseInfoResp);
+  rpc DeleteEnterpriseInfo(DeleteEnterpriseInfoReq) returns (DeleteEnterpriseInfoResp);
+  rpc GetEnterpriseInfo(GetEnterpriseInfoReq) returns (GetEnterpriseInfoResp);
 }

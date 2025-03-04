@@ -11,6 +11,10 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	clientv3 "go.etcd.io/etcd/client/v3"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+
 	chatmw "github.com/openimsdk/chat/internal/api/mw"
 	"github.com/openimsdk/chat/internal/api/util"
 	"github.com/openimsdk/chat/pkg/common/config"
@@ -26,9 +30,6 @@ import (
 	"github.com/openimsdk/tools/system/program"
 	"github.com/openimsdk/tools/utils/datautil"
 	"github.com/openimsdk/tools/utils/runtimeenv"
-	clientv3 "go.etcd.io/etcd/client/v3"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
 type Config struct {
@@ -197,6 +198,12 @@ func SetAdminRoute(router gin.IRouter, admin *Api, mw *chatmw.MW, cfg *Config, c
 	applicationGroup.POST("/delete_version", mw.CheckAdmin, admin.DeleteApplicationVersion)
 	applicationGroup.POST("/latest_version", admin.LatestApplicationVersion)
 	applicationGroup.POST("/page_versions", admin.PageApplicationVersion)
+
+	enterpriseGroup := router.Group("enterprise")
+	enterpriseGroup.POST("/add", mw.CheckAdmin, admin.AddEnterpriseInfo)
+	enterpriseGroup.POST("/delete", mw.CheckAdmin, admin.DeleteEnterpriseInfo)
+	enterpriseGroup.POST("/update", mw.CheckAdmin, admin.UpdateEnterpriseInfo)
+	enterpriseGroup.POST("/get", mw.CheckAdmin, admin.GetEnterpriseInfo)
 
 	var etcdClient *clientv3.Client
 	if cfg.Discovery.Enable == kdisc.ETCDCONST {
