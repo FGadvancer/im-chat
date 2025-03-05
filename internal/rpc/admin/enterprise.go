@@ -24,6 +24,7 @@ import (
 	"github.com/openimsdk/chat/pkg/common/mctx"
 	adminpb "github.com/openimsdk/chat/pkg/protocol/admin"
 	"github.com/openimsdk/tools/errs"
+	"github.com/openimsdk/tools/log"
 )
 
 func (o *adminServer) AddEnterpriseInfo(ctx context.Context, req *adminpb.AddEnterpriseInfoReq) (*adminpb.AddEnterpriseInfoResp, error) {
@@ -44,6 +45,7 @@ func (o *adminServer) AddEnterpriseInfo(ctx context.Context, req *adminpb.AddEnt
 		CreateTime:            time.Now(),
 	}
 	if err := o.Database.AddEnterpriseInfo(ctx, val); err != nil {
+		log.ZWarn(ctx, "add enterprise info failed", err)
 		return nil, err
 	}
 	return &adminpb.AddEnterpriseInfoResp{EnterpriseID: id.Hex()}, nil
