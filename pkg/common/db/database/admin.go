@@ -16,15 +16,17 @@ package database
 
 import (
 	"context"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
+
+	"github.com/redis/go-redis/v9"
 
 	"github.com/openimsdk/chat/pkg/common/db/cache"
 	"github.com/openimsdk/protocol/constant"
 	"github.com/openimsdk/tools/db/mongoutil"
 	"github.com/openimsdk/tools/db/pagination"
 	"github.com/openimsdk/tools/db/tx"
-	"github.com/redis/go-redis/v9"
 
 	"github.com/openimsdk/chat/pkg/common/db/model/admin"
 	admindb "github.com/openimsdk/chat/pkg/common/db/table/admin"
@@ -84,6 +86,11 @@ type AdminDatabaseInterface interface {
 	UpdateVersion(ctx context.Context, id primitive.ObjectID, update map[string]any) error
 	DeleteVersion(ctx context.Context, id []primitive.ObjectID) error
 	PageVersion(ctx context.Context, platforms []string, page pagination.Pagination) (int64, []*admindb.Application, error)
+	AddEnterpriseInfo(ctx context.Context, info *admindb.EnterpriseInfo) error
+	GetEnterpriseInfo(ctx context.Context, enterpriseID primitive.ObjectID) (*admindb.EnterpriseInfo, error)
+	UpdateEnterpriseInfo(ctx context.Context, id primitive.ObjectID, update map[string]any) error
+	DeleteEnterpriseInfo(ctx context.Context, enterpriseID primitive.ObjectID) error
+	SearchEnterpriseInfo(ctx context.Context, keyword string, pagination pagination.Pagination) (int64, []*admindb.EnterpriseInfo, error)
 }
 
 func NewAdminDatabase(cli *mongoutil.Client, rdb redis.UniversalClient) (AdminDatabaseInterface, error) {
@@ -127,6 +134,11 @@ func NewAdminDatabase(cli *mongoutil.Client, rdb redis.UniversalClient) (AdminDa
 	if err != nil {
 		return nil, err
 	}
+	enterprise, err := admin.NewEnterpriseInfo(cli.GetDB())
+	if err != nil {
+		return nil, err
+	}
+
 	return &AdminDatabase{
 		tx:                 cli.GetTx(),
 		admin:              a,
@@ -139,6 +151,7 @@ func NewAdminDatabase(cli *mongoutil.Client, rdb redis.UniversalClient) (AdminDa
 		applet:             applet,
 		clientConfig:       clientConfig,
 		application:        application,
+		enterprise:         enterprise,
 		cache:              cache.NewTokenInterface(rdb),
 	}, nil
 }
@@ -155,7 +168,28 @@ type AdminDatabase struct {
 	applet             admindb.AppletInterface
 	clientConfig       admindb.ClientConfigInterface
 	application        admindb.ApplicationInterface
+	enterprise         admindb.EnterpriseInfoInterface
 	cache              cache.TokenInterface
+}
+
+func (o *AdminDatabase) AddEnterpriseInfo(ctx context.Context, info *admindb.EnterpriseInfo) error {
+	return o.enterprise.Add(ctx, info)
+}
+
+func (o *AdminDatabase) GetEnterpriseInfo(ctx context.Context, enterpriseID primitive.ObjectID) (*admindb.EnterpriseInfo, error) {
+	return o.enterprise.Get(ctx, enterpriseID)
+}
+
+func (o *AdminDatabase) UpdateEnterpriseInfo(ctx context.Context, id primitive.ObjectID, update map[string]any) error {
+	return o.enterprise.Update(ctx, id, update)
+}
+
+func (o *AdminDatabase) DeleteEnterpriseInfo(ctx context.Context, enterpriseID primitive.ObjectID) error {
+	return o.enterprise.Delete(ctx, enterpriseID)
+}
+
+func (o *AdminDatabase) SearchEnterpriseInfo(ctx context.Context, keyword string, pagination pagination.Pagination) (int64, []*admindb.EnterpriseInfo, error) {
+	return o.enterprise.Search(ctx, keyword, pagination)
 }
 
 func (o *AdminDatabase) GetAdmin(ctx context.Context, account string) (*admindb.Admin, error) {
