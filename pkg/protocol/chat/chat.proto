@@ -114,6 +114,9 @@ message RegisterUserInfo {
   string account = 9;
   string password = 10;
   int32 RegisterType = 11;
+  string enterprise = 12;
+  string position = 13;
+  string enterpriseWebsite = 14;
 }
 
 message RegisterUserReq {

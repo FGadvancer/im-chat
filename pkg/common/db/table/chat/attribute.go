@@ -8,23 +8,26 @@ import (
 )
 
 type Attribute struct {
-	UserID           string    `bson:"user_id"`
-	Account          string    `bson:"account"`
-	PhoneNumber      string    `bson:"phone_number"`
-	AreaCode         string    `bson:"area_code"`
-	Email            string    `bson:"email"`
-	Nickname         string    `bson:"nickname"`
-	FaceURL          string    `bson:"face_url"`
-	Gender           int32     `bson:"gender"`
-	CreateTime       time.Time `bson:"create_time"`
-	ChangeTime       time.Time `bson:"change_time"`
-	BirthTime        time.Time `bson:"birth_time"`
-	Level            int32     `bson:"level"`
-	AllowVibration   int32     `bson:"allow_vibration"`
-	AllowBeep        int32     `bson:"allow_beep"`
-	AllowAddFriend   int32     `bson:"allow_add_friend"`
-	GlobalRecvMsgOpt int32     `bson:"global_recv_msg_opt"`
-	RegisterType     int32     `bson:"register_type"`
+	UserID            string    `bson:"user_id"`
+	Account           string    `bson:"account"`
+	PhoneNumber       string    `bson:"phone_number"`
+	AreaCode          string    `bson:"area_code"`
+	Email             string    `bson:"email"`
+	Nickname          string    `bson:"nickname"`
+	FaceURL           string    `bson:"face_url"`
+	Gender            int32     `bson:"gender"`
+	CreateTime        time.Time `bson:"create_time"`
+	ChangeTime        time.Time `bson:"change_time"`
+	BirthTime         time.Time `bson:"birth_time"`
+	Level             int32     `bson:"level"`
+	AllowVibration    int32     `bson:"allow_vibration"`
+	AllowBeep         int32     `bson:"allow_beep"`
+	AllowAddFriend    int32     `bson:"allow_add_friend"`
+	GlobalRecvMsgOpt  int32     `bson:"global_recv_msg_opt"`
+	RegisterType      int32     `bson:"register_type"`
+	Enterprise        string    `bson:"enterprise"`         // 公司名称
+	Position          string    `bson:"position"`           // 职务
+	EnterpriseWebsite string    `bson:"enterprise_website"` // 公司官网
 }
 
 func (Attribute) TableName() string {
