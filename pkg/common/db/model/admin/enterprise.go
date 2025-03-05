@@ -21,7 +21,6 @@ func NewEnterpriseInfo(db *mongo.Database) (admindb.EnterpriseInfoInterface, err
 			Keys: bson.D{
 				{Key: "name", Value: "text"},
 			},
-			Options: options.Index().SetUnique(true),
 		},
 		{
 			Keys: bson.D{
