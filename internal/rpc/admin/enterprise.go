@@ -110,11 +110,39 @@ func (o *adminServer) GetEnterpriseInfo(ctx context.Context, req *adminpb.GetEnt
 	if _, err := mctx.CheckAdmin(ctx); err != nil {
 		return nil, err
 	}
+	oid, err := primitive.ObjectIDFromHex(req.EnterpriseID)
+	if err != nil {
+		return nil, errs.ErrArgs.WrapMsg("invalid id " + err.Error())
+	}
+	enterprise, err := o.Database.GetEnterpriseInfo(ctx, oid)
+	if err != nil {
+		return nil, err
+	}
+	return &adminpb.GetEnterpriseInfoResp{
+		Enterprise: &adminpb.EnterpriseInfo{
+			EnterpriseID:          enterprise.EnterpriseID.Hex(),
+			Name:                  enterprise.Name,
+			Logo:                  enterprise.Logo,
+			Website:               enterprise.Website,
+			IsEligibleForCashback: enterprise.IsEligibleForCashback,
+			Tags:                  enterprise.Tags,
+			Address:               enterprise.Address,
+			PhoneNumber:           enterprise.PhoneNumber,
+			Email:                 enterprise.Email,
+			CreateTime:            enterprise.CreateTime.UnixMilli(),
+		},
+	}, nil
+}
+
+func (o *adminServer) QueryEnterpriseList(ctx context.Context, req *adminpb.QueryEnterpriseListReq) (*adminpb.QueryEnterpriseListResp, error) {
+	if _, err := mctx.CheckAdmin(ctx); err != nil {
+		return nil, err
+	}
 	total, enterprises, err := o.Database.SearchEnterpriseInfo(ctx, req.NameKeyword, req.Pagination)
 	if err != nil {
 		return nil, err
 	}
-	resp := &adminpb.GetEnterpriseInfoResp{Total: int32(total), Enterprises: make([]*adminpb.EnterpriseInfo, 0, len(enterprises))}
+	resp := &adminpb.QueryEnterpriseListResp{Total: int32(total), Enterprises: make([]*adminpb.EnterpriseInfo, 0, len(enterprises))}
 	for _, enterprise := range enterprises {
 		resp.Enterprises = append(resp.Enterprises, &adminpb.EnterpriseInfo{
 			EnterpriseID:          enterprise.EnterpriseID.Hex(),

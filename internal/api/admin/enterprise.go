@@ -22,3 +22,7 @@ func (o *Api) UpdateEnterpriseInfo(c *gin.Context) {
 func (o *Api) GetEnterpriseInfo(c *gin.Context) {
 	a2r.Call(c, admin.AdminClient.GetEnterpriseInfo, o.adminClient)
 }
+
+func (o *Api) QueryEnterpriseList(c *gin.Context) {
+	a2r.Call(c, admin.AdminClient.QueryEnterpriseList, o.adminClient)
+}

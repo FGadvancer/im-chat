@@ -204,6 +204,7 @@ func SetAdminRoute(router gin.IRouter, admin *Api, mw *chatmw.MW, cfg *Config, c
 	enterpriseGroup.POST("/delete", mw.CheckAdmin, admin.DeleteEnterpriseInfo)
 	enterpriseGroup.POST("/update", mw.CheckAdmin, admin.UpdateEnterpriseInfo)
 	enterpriseGroup.POST("/get", mw.CheckAdmin, admin.GetEnterpriseInfo)
+	enterpriseGroup.POST("/query", mw.CheckAdmin, admin.QueryEnterpriseList)
 
 	var etcdClient *clientv3.Client
 	if cfg.Discovery.Enable == kdisc.ETCDCONST {

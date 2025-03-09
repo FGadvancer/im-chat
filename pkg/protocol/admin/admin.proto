@@ -580,12 +580,20 @@ message DeleteEnterpriseInfoReq {
 message DeleteEnterpriseInfoResp {
 }
 
+message GetEnterpriseInfoReq {
+  string enterpriseID = 1;
+}
+
+message GetEnterpriseInfoResp{
+  EnterpriseInfo enterprise = 1;
+}
+
 message RequestPagination {
   int32 pageNumber = 1;
   int32 showNumber = 2;
 }
 
-message GetEnterpriseInfoReq {
+message QueryEnterpriseListReq {
   RequestPagination pagination = 1;
   string nameKeyword = 4;
   repeated string tags = 5;
@@ -605,10 +613,13 @@ message EnterpriseInfo{
   int64 createTime = 10;
 }
 
-message GetEnterpriseInfoResp {
+message QueryEnterpriseListResp {
   repeated EnterpriseInfo enterprises = 1;
   int32 total = 2;
 }
+
+
+
 
 
 service admin {
@@ -693,4 +704,5 @@ service admin {
   rpc UpdateEnterpriseInfo(UpdateEnterpriseInfoReq) returns (UpdateEnterpriseInfoResp);
   rpc DeleteEnterpriseInfo(DeleteEnterpriseInfoReq) returns (DeleteEnterpriseInfoResp);
   rpc GetEnterpriseInfo(GetEnterpriseInfoReq) returns (GetEnterpriseInfoResp);
+  rpc QueryEnterpriseList(QueryEnterpriseListReq) returns (QueryEnterpriseListResp);
 }
