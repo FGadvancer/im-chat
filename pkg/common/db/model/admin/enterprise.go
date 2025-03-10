@@ -19,7 +19,7 @@ func NewEnterpriseInfo(db *mongo.Database) (admindb.EnterpriseInfoInterface, err
 	_, err := coll.Indexes().CreateMany(context.Background(), []mongo.IndexModel{
 		{
 			Keys: bson.D{
-				{Key: "name", Value: "text"},
+				{Key: "name", Value: 1},
 			},
 		},
 		{
@@ -40,13 +40,8 @@ type EnterpriseInfoMgo struct {
 
 func (a *EnterpriseInfoMgo) Search(ctx context.Context, keyword string, pagination pagination.Pagination) (int64, []*admindb.EnterpriseInfo, error) {
 	filter := bson.M{}
-
 	if keyword != "" {
-		filter = bson.M{
-			"$text": bson.M{
-				"$search": keyword,
-			},
-		}
+		filter = bson.M{"name": bson.M{"$regex": keyword, "$options": "i"}}
 	}
 	return mongoutil.FindPage[*admin.EnterpriseInfo](ctx, a.coll, filter, pagination, options.Find().SetSort(a.sort()))
 }
