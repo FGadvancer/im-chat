@@ -17,12 +17,13 @@ package chat
 import (
 	"context"
 
-	"github.com/openimsdk/tools/db/mongoutil"
-	"github.com/openimsdk/tools/db/pagination"
-	"github.com/openimsdk/tools/errs"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+
+	"github.com/openimsdk/tools/db/mongoutil"
+	"github.com/openimsdk/tools/db/pagination"
+	"github.com/openimsdk/tools/errs"
 
 	"github.com/openimsdk/chat/pkg/common/db/table/chat"
 )
@@ -39,6 +40,11 @@ func NewAttribute(db *mongo.Database) (chat.AttributeInterface, error) {
 		{
 			Keys: bson.D{
 				{Key: "account", Value: 1},
+			},
+		},
+		{
+			Keys: bson.D{
+				{Key: "enterprise", Value: 1},
 			},
 		},
 		{
@@ -122,11 +128,7 @@ func (o *Attribute) Take(ctx context.Context, userID string) (*chat.Attribute, e
 
 func (o *Attribute) SearchNormalUser(ctx context.Context, keyword string, forbiddenIDs []string, gender int32, pagination pagination.Pagination) (int64, []*chat.Attribute, error) {
 	filter := bson.M{}
-	if gender == 0 {
-		filter["gender"] = bson.M{
-			"$in": []int32{0, 1, 2},
-		}
-	} else {
+	if gender != 0 {
 		filter["gender"] = gender
 	}
 	if len(forbiddenIDs) > 0 {
@@ -136,11 +138,9 @@ func (o *Attribute) SearchNormalUser(ctx context.Context, keyword string, forbid
 	}
 	if keyword != "" {
 		filter["$or"] = []bson.M{
-			{"user_id": bson.M{"$regex": keyword, "$options": "i"}},
-			{"account": bson.M{"$regex": keyword, "$options": "i"}},
 			{"nickname": bson.M{"$regex": keyword, "$options": "i"}},
 			{"phone_number": bson.M{"$regex": keyword, "$options": "i"}},
-			{"email": bson.M{"$regex": keyword, "$options": "i"}},
+			{"enterprise": bson.M{"$regex": keyword, "$options": "i"}},
 		}
 	}
 	return mongoutil.FindPage[*chat.Attribute](ctx, o.coll, filter, pagination)
