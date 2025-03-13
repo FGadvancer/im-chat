@@ -2,6 +2,9 @@ package chat
 
 import (
 	"context"
+	"strconv"
+	"strings"
+
 	"github.com/openimsdk/chat/pkg/common/db/dbutil"
 	table "github.com/openimsdk/chat/pkg/common/db/table/chat"
 	"github.com/openimsdk/chat/pkg/eerrs"
@@ -10,8 +13,6 @@ import (
 	"github.com/openimsdk/tools/errs"
 	"github.com/openimsdk/tools/utils/datautil"
 	"github.com/openimsdk/tools/utils/stringutil"
-	"strconv"
-	"strings"
 )
 
 func DbToPbAttribute(attribute *table.Attribute) *common.UserPublicInfo {
@@ -35,22 +36,25 @@ func DbToPbAttributes(attributes []*table.Attribute) []*common.UserPublicInfo {
 
 func DbToPbUserFullInfo(attribute *table.Attribute) *common.UserFullInfo {
 	return &common.UserFullInfo{
-		UserID:           attribute.UserID,
-		Password:         "",
-		Account:          attribute.Account,
-		PhoneNumber:      attribute.PhoneNumber,
-		AreaCode:         attribute.AreaCode,
-		Email:            attribute.Email,
-		Nickname:         attribute.Nickname,
-		FaceURL:          attribute.FaceURL,
-		Gender:           attribute.Gender,
-		Level:            attribute.Level,
-		Birth:            attribute.BirthTime.UnixMilli(),
-		AllowAddFriend:   attribute.AllowAddFriend,
-		AllowBeep:        attribute.AllowBeep,
-		AllowVibration:   attribute.AllowVibration,
-		GlobalRecvMsgOpt: attribute.GlobalRecvMsgOpt,
-		RegisterType:     attribute.RegisterType,
+		UserID:            attribute.UserID,
+		Password:          "",
+		Account:           attribute.Account,
+		PhoneNumber:       attribute.PhoneNumber,
+		AreaCode:          attribute.AreaCode,
+		Email:             attribute.Email,
+		Nickname:          attribute.Nickname,
+		FaceURL:           attribute.FaceURL,
+		Gender:            attribute.Gender,
+		Level:             attribute.Level,
+		Birth:             attribute.BirthTime.UnixMilli(),
+		AllowAddFriend:    attribute.AllowAddFriend,
+		AllowBeep:         attribute.AllowBeep,
+		AllowVibration:    attribute.AllowVibration,
+		GlobalRecvMsgOpt:  attribute.GlobalRecvMsgOpt,
+		RegisterType:      attribute.RegisterType,
+		Enterprise:        attribute.Enterprise,
+		Position:          attribute.Position,
+		EnterpriseWebsite: attribute.EnterpriseWebsite,
 	}
 }
 
