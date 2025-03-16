@@ -65,6 +65,15 @@ func ToDBAttributeUpdate(req *chat.UpdateUserInfoReq) (map[string]any, error) {
 	if req.GlobalRecvMsgOpt != nil {
 		update["global_recv_msg_opt"] = req.GlobalRecvMsgOpt.Value
 	}
+	if req.Enterprise != nil {
+		update["enterprise"] = req.Enterprise.Value
+	}
+	if req.Position != nil {
+		update["position"] = req.Position.Value
+	}
+	if req.EnterpriseWebsite != nil {
+		update["enterprise_website"] = req.EnterpriseWebsite.Value
+	}
 	//if len(update) == 0 {
 	//	return nil, errs.ErrArgs.WrapMsg("no update info")
 	//}

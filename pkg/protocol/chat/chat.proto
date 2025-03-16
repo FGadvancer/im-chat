@@ -46,6 +46,9 @@ message UpdateUserInfoReq {
   openim.protobuf.Int32Value allowVibration = 13;
   openim.protobuf.Int32Value globalRecvMsgOpt = 14;
   openim.protobuf.Int32Value RegisterType = 15;
+  openim.protobuf.StringValue enterprise = 16;
+  openim.protobuf.StringValue position = 17;
+  openim.protobuf.StringValue enterpriseWebsite = 18;
 }
 
 message UpdateUserInfoResp {

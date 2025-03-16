@@ -618,10 +618,6 @@ message QueryEnterpriseListResp {
   int32 total = 2;
 }
 
-
-
-
-
 service admin {
   // Login
   rpc Login(LoginReq) returns (LoginResp);
