@@ -27,6 +27,10 @@ func NewEnterpriseInfo(db *mongo.Database) (admindb.EnterpriseInfoInterface, err
 				{Key: "create_time", Value: -1},
 			},
 		},
+		{Keys: bson.D{
+			{Key: "tags", Value: 1},
+		},
+		},
 	})
 	if err != nil {
 		return nil, err
@@ -41,7 +45,12 @@ type EnterpriseInfoMgo struct {
 func (a *EnterpriseInfoMgo) Search(ctx context.Context, keyword string, pagination pagination.Pagination) (int64, []*admindb.EnterpriseInfo, error) {
 	filter := bson.M{}
 	if keyword != "" {
-		filter = bson.M{"name": bson.M{"$regex": keyword, "$options": "i"}}
+		filter = bson.M{
+			"$or": []bson.M{
+				{"name": bson.M{"$regex": keyword, "$options": "i"}},
+				{"tags": bson.M{"$regex": keyword, "$options": "i"}},
+			},
+		}
 	}
 	return mongoutil.FindPage[*admin.EnterpriseInfo](ctx, a.coll, filter, pagination, options.Find().SetSort(a.sort()))
 }

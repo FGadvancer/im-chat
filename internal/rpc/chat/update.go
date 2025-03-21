@@ -74,6 +74,12 @@ func ToDBAttributeUpdate(req *chat.UpdateUserInfoReq) (map[string]any, error) {
 	if req.EnterpriseWebsite != nil {
 		update["enterprise_website"] = req.EnterpriseWebsite.Value
 	}
+	if len(req.Tags) > 0 {
+		update["tags"] = req.Tags
+	}
+	if req.ClearTags {
+		update["tags"] = []string{}
+	}
 	//if len(update) == 0 {
 	//	return nil, errs.ErrArgs.WrapMsg("no update info")
 	//}

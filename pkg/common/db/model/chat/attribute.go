@@ -47,6 +47,10 @@ func NewAttribute(db *mongo.Database) (chat.AttributeInterface, error) {
 				{Key: "enterprise", Value: 1},
 			},
 		},
+		{Keys: bson.D{
+			{Key: "tags", Value: 1},
+		},
+		},
 		{
 			Keys: bson.D{
 				{Key: "email", Value: 1},
@@ -141,6 +145,7 @@ func (o *Attribute) SearchNormalUser(ctx context.Context, keyword string, forbid
 			{"nickname": bson.M{"$regex": keyword, "$options": "i"}},
 			{"phone_number": bson.M{"$regex": keyword, "$options": "i"}},
 			{"enterprise": bson.M{"$regex": keyword, "$options": "i"}},
+			{"tags": bson.M{"$regex": keyword, "$options": "i"}},
 		}
 	}
 	return mongoutil.FindPage[*chat.Attribute](ctx, o.coll, filter, pagination)

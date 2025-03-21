@@ -55,6 +55,7 @@ func DbToPbUserFullInfo(attribute *table.Attribute) *common.UserFullInfo {
 		Enterprise:        attribute.Enterprise,
 		Position:          attribute.Position,
 		EnterpriseWebsite: attribute.EnterpriseWebsite,
+		Tags:              attribute.Tags,
 	}
 }
 

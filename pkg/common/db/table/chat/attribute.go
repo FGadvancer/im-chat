@@ -28,6 +28,7 @@ type Attribute struct {
 	Enterprise        string    `bson:"enterprise"`
 	Position          string    `bson:"position"`
 	EnterpriseWebsite string    `bson:"enterprise_website"`
+	Tags              []string  `bson:"tags"`
 }
 
 func (Attribute) TableName() string {

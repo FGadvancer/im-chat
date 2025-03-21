@@ -49,6 +49,8 @@ message UpdateUserInfoReq {
   openim.protobuf.StringValue enterprise = 16;
   openim.protobuf.StringValue position = 17;
   openim.protobuf.StringValue enterpriseWebsite = 18;
+  repeated string tags = 19;
+  bool clearTags = 20;
 }
 
 message UpdateUserInfoResp {
@@ -120,6 +122,7 @@ message RegisterUserInfo {
   string enterprise = 12;
   string position = 13;
   string enterpriseWebsite = 14;
+  repeated string tags = 15;
 }
 
 message RegisterUserReq {
