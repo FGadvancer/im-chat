@@ -16,6 +16,7 @@ package chat
 
 import (
 	"context"
+	"regexp"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -132,6 +133,7 @@ func (o *Attribute) Take(ctx context.Context, userID string) (*chat.Attribute, e
 
 func (o *Attribute) SearchNormalUser(ctx context.Context, keyword string, forbiddenIDs []string, gender int32, pagination pagination.Pagination) (int64, []*chat.Attribute, error) {
 	filter := bson.M{}
+	escapedKeyword := regexp.QuoteMeta(keyword)
 	if gender != 0 {
 		filter["gender"] = gender
 	}
@@ -140,12 +142,12 @@ func (o *Attribute) SearchNormalUser(ctx context.Context, keyword string, forbid
 			"$nin": forbiddenIDs,
 		}
 	}
-	if keyword != "" {
+	if escapedKeyword != "" {
 		filter["$or"] = []bson.M{
-			{"nickname": bson.M{"$regex": keyword, "$options": "i"}},
-			{"phone_number": bson.M{"$regex": keyword, "$options": "i"}},
-			{"enterprise": bson.M{"$regex": keyword, "$options": "i"}},
-			{"tags": bson.M{"$regex": keyword, "$options": "i"}},
+			{"nickname": bson.M{"$regex": escapedKeyword, "$options": "i"}},
+			{"phone_number": bson.M{"$regex": escapedKeyword, "$options": "i"}},
+			{"enterprise": bson.M{"$regex": escapedKeyword, "$options": "i"}},
+			{"tags": bson.M{"$regex": escapedKeyword, "$options": "i"}},
 		}
 	}
 	return mongoutil.FindPage[*chat.Attribute](ctx, o.coll, filter, pagination)
