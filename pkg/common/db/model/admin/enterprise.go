@@ -2,6 +2,7 @@ package admin
 
 import (
 	"context"
+	"regexp"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -43,12 +44,13 @@ type EnterpriseInfoMgo struct {
 }
 
 func (a *EnterpriseInfoMgo) Search(ctx context.Context, keyword string, pagination pagination.Pagination) (int64, []*admindb.EnterpriseInfo, error) {
+	escapedKeyword := regexp.QuoteMeta(keyword)
 	filter := bson.M{}
-	if keyword != "" {
+	if escapedKeyword != "" {
 		filter = bson.M{
 			"$or": []bson.M{
-				{"name": bson.M{"$regex": keyword, "$options": "i"}},
-				{"tags": bson.M{"$regex": keyword, "$options": "i"}},
+				{"name": bson.M{"$regex": escapedKeyword, "$options": "i"}},
+				{"tags": bson.M{"$regex": escapedKeyword, "$options": "i"}},
 			},
 		}
 	}
