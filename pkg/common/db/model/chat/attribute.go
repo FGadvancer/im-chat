@@ -54,6 +54,11 @@ func NewAttribute(db *mongo.Database) (chat.AttributeInterface, error) {
 		},
 		{
 			Keys: bson.D{
+				{Key: "create_time", Value: -1},
+			},
+		},
+		{
+			Keys: bson.D{
 				{Key: "email", Value: 1},
 			},
 		},
@@ -72,6 +77,10 @@ func NewAttribute(db *mongo.Database) (chat.AttributeInterface, error) {
 
 type Attribute struct {
 	coll *mongo.Collection
+}
+
+func (o *Attribute) sort() any {
+	return bson.D{{"create_time", -1}}
 }
 
 func (o *Attribute) Create(ctx context.Context, attribute ...*chat.Attribute) error {
@@ -150,7 +159,7 @@ func (o *Attribute) SearchNormalUser(ctx context.Context, keyword string, forbid
 			{"tags": bson.M{"$regex": escapedKeyword, "$options": "i"}},
 		}
 	}
-	return mongoutil.FindPage[*chat.Attribute](ctx, o.coll, filter, pagination)
+	return mongoutil.FindPage[*chat.Attribute](ctx, o.coll, filter, pagination, options.Find().SetSort(o.sort()))
 }
 
 func (o *Attribute) SearchUser(ctx context.Context, keyword string, userIDs []string, genders []int32, pagination pagination.Pagination) (int64, []*chat.Attribute, error) {
