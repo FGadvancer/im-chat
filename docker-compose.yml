@@ -12,11 +12,11 @@ services:
     networks:
       - chat
 
-  lark-tower-admin-front:
-    image: tomtang123/lark-tower-admin-front:release-v1.0.0
-    container_name: lark-tower-admin-front
-    restart: always
-    ports:
-      - "11004:3000"
-    networks:
-      - chat
+#  lark-tower-admin-front:
+#    image: tomtang123/lark-tower-admin-front:release-v1.0.0
+#    container_name: lark-tower-admin-front
+#    restart: always
+#    ports:
+#      - "11004:3000"
+#    networks:
+#      - chat
