@@ -13,7 +13,7 @@ services:
       - chat
 
   lark-tower-admin-front:
-    image: tomtang123/lark-tower-admin-front:release-v1.0.1
+    image: tomtang123/lark-tower-admin-front:release-v1.0.2
     container_name: lark-tower-admin-front
     restart: always
     ports:
