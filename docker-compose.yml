@@ -21,4 +21,4 @@ services:
     networks:
       - chat
     environment:
-      - BASE_PATH=NEXT_PUBLIC_BASE_PATH
+      - BASE_PATH=admin-web
