@@ -4,7 +4,7 @@ networks:
 
 services:
   lark-tower-web-front:
-    image: tomtang123/lark-tower-web-front:release-v1.0.0
+    image: tomtang123/lark-tower-web-front:release-v1.0.1
     container_name: lark-tower-web-front
     restart: always
     ports:
@@ -13,7 +13,7 @@ services:
       - chat
 
   lark-tower-admin-front:
-    image: tomtang123/lark-tower-admin-front:release-v1.0.0
+    image: tomtang123/lark-tower-admin-front:release-v1.0.1
     container_name: lark-tower-admin-front
     restart: always
     ports:
