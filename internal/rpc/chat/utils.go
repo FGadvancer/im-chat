@@ -36,10 +36,10 @@ func DbToPbAttributes(attributes []*table.Attribute) []*common.UserPublicInfo {
 
 func DbToPbUserFullInfo(attribute *table.Attribute) *common.UserFullInfo {
 	return &common.UserFullInfo{
-		UserID:            attribute.UserID,
-		Password:          "",
-		Account:           attribute.Account,
-		PhoneNumber:       attribute.PhoneNumber,
+		UserID:   attribute.UserID,
+		Password: "",
+		Account:  attribute.Account,
+		//PhoneNumber:       attribute.PhoneNumber,
 		AreaCode:          attribute.AreaCode,
 		Email:             attribute.Email,
 		Nickname:          attribute.Nickname,
@@ -56,6 +56,7 @@ func DbToPbUserFullInfo(attribute *table.Attribute) *common.UserFullInfo {
 		Position:          attribute.Position,
 		EnterpriseWebsite: attribute.EnterpriseWebsite,
 		Tags:              attribute.Tags,
+		ContactInfo:       attribute.ContactInfo,
 	}
 }
 

@@ -24,6 +24,7 @@ message UserFullInfo{
   string position = 18;
   string enterpriseWebsite = 19;
   repeated string tags = 20;
+  string contactInfo = 21;
 }
 
 message UserPublicInfo{

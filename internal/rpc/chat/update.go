@@ -80,6 +80,9 @@ func ToDBAttributeUpdate(req *chat.UpdateUserInfoReq) (map[string]any, error) {
 	if req.ClearTags {
 		update["tags"] = []string{}
 	}
+	if req.ContactInfo != nil {
+		update["contact_info"] = req.ContactInfo.Value
+	}
 	//if len(update) == 0 {
 	//	return nil, errs.ErrArgs.WrapMsg("no update info")
 	//}

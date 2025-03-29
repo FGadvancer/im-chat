@@ -395,6 +395,7 @@ func (o *chatSvr) RegisterUser(ctx context.Context, req *chat.RegisterUserReq) (
 		Position:          req.User.Position,
 		EnterpriseWebsite: req.User.EnterpriseWebsite,
 		Tags:              req.User.Tags,
+		ContactInfo:       req.User.ContactInfo,
 	}
 	if err := o.Database.RegisterUser(ctx, register, account, attribute, credentials); err != nil {
 		return nil, err
