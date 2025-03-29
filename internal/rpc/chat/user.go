@@ -333,7 +333,7 @@ func (o *chatSvr) FindUserFullInfo(ctx context.Context, req *chat.FindUserFullIn
 	if err != nil {
 		return nil, err
 	}
-	return &chat.FindUserFullInfoResp{Users: DbToPbUserFullInfos(attributes)}, nil
+	return &chat.FindUserFullInfoResp{Users: DbToPbUserFullInfos(attributes, true)}, nil
 }
 
 func (o *chatSvr) SearchUserFullInfo(ctx context.Context, req *chat.SearchUserFullInfoReq) (*chat.SearchUserFullInfoResp, error) {
@@ -346,7 +346,7 @@ func (o *chatSvr) SearchUserFullInfo(ctx context.Context, req *chat.SearchUserFu
 	}
 	return &chat.SearchUserFullInfoResp{
 		Total: uint32(total),
-		Users: DbToPbUserFullInfos(list),
+		Users: DbToPbUserFullInfos(list, false),
 	}, nil
 }
 
@@ -396,7 +396,7 @@ func (o *chatSvr) SearchUserInfo(ctx context.Context, req *chat.SearchUserInfoRe
 	}
 	return &chat.SearchUserInfoResp{
 		Total: uint32(total),
-		Users: DbToPbUserFullInfos(list),
+		Users: DbToPbUserFullInfos(list, false),
 	}, nil
 }
 

@@ -36,10 +36,34 @@ func DbToPbAttributes(attributes []*table.Attribute) []*common.UserPublicInfo {
 
 func DbToPbUserFullInfo(attribute *table.Attribute) *common.UserFullInfo {
 	return &common.UserFullInfo{
-		UserID:   attribute.UserID,
-		Password: "",
-		Account:  attribute.Account,
-		//PhoneNumber:       attribute.PhoneNumber,
+		UserID:            attribute.UserID,
+		Password:          "",
+		Account:           attribute.Account,
+		PhoneNumber:       attribute.PhoneNumber,
+		AreaCode:          attribute.AreaCode,
+		Email:             attribute.Email,
+		Nickname:          attribute.Nickname,
+		FaceURL:           attribute.FaceURL,
+		Gender:            attribute.Gender,
+		Level:             attribute.Level,
+		Birth:             attribute.BirthTime.UnixMilli(),
+		AllowAddFriend:    attribute.AllowAddFriend,
+		AllowBeep:         attribute.AllowBeep,
+		AllowVibration:    attribute.AllowVibration,
+		GlobalRecvMsgOpt:  attribute.GlobalRecvMsgOpt,
+		RegisterType:      attribute.RegisterType,
+		Enterprise:        attribute.Enterprise,
+		Position:          attribute.Position,
+		EnterpriseWebsite: attribute.EnterpriseWebsite,
+		Tags:              attribute.Tags,
+		ContactInfo:       attribute.ContactInfo,
+	}
+}
+func DbToPbUserFullInfoWithOutPhoneNumber(attribute *table.Attribute) *common.UserFullInfo {
+	return &common.UserFullInfo{
+		UserID:            attribute.UserID,
+		Password:          "",
+		Account:           attribute.Account,
 		AreaCode:          attribute.AreaCode,
 		Email:             attribute.Email,
 		Nickname:          attribute.Nickname,
@@ -60,8 +84,11 @@ func DbToPbUserFullInfo(attribute *table.Attribute) *common.UserFullInfo {
 	}
 }
 
-func DbToPbUserFullInfos(attributes []*table.Attribute) []*common.UserFullInfo {
-	return datautil.Slice(attributes, DbToPbUserFullInfo)
+func DbToPbUserFullInfos(attributes []*table.Attribute, isShowPhoneNumber bool) []*common.UserFullInfo {
+	if isShowPhoneNumber {
+		return datautil.Slice(attributes, DbToPbUserFullInfo)
+	}
+	return datautil.Slice(attributes, DbToPbUserFullInfoWithOutPhoneNumber)
 }
 
 func BuildCredentialPhone(areaCode, phone string) string {
