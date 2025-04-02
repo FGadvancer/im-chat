@@ -135,9 +135,6 @@ func (o *adminServer) GetEnterpriseInfo(ctx context.Context, req *adminpb.GetEnt
 }
 
 func (o *adminServer) QueryEnterpriseList(ctx context.Context, req *adminpb.QueryEnterpriseListReq) (*adminpb.QueryEnterpriseListResp, error) {
-	if _, err := mctx.CheckAdmin(ctx); err != nil {
-		return nil, err
-	}
 	total, enterprises, err := o.Database.SearchEnterpriseInfo(ctx, req.NameKeyword, req.Pagination)
 	if err != nil {
 		return nil, err
