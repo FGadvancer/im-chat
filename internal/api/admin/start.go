@@ -183,10 +183,10 @@ func SetAdminRoute(router gin.IRouter, admin *Api, mw *chatmw.MW, cfg *Config, c
 	userRouter := router.Group("/user", mw.CheckAdmin)
 	userRouter.POST("/password/reset", admin.ResetUserPassword) // Reset user password
 
-	initGroup := router.Group("/client_config", mw.CheckAdmin)
-	initGroup.POST("/get", admin.GetClientConfig) // Get client initialization configuration
-	initGroup.POST("/set", admin.SetClientConfig) // Set client initialization configuration
-	initGroup.POST("/del", admin.DelClientConfig) // Delete client initialization configuration
+	initGroup := router.Group("/client_config")
+	initGroup.POST("/get", admin.GetClientConfig)                // Get client initialization configuration
+	initGroup.POST("/set", mw.CheckAdmin, admin.SetClientConfig) // Set client initialization configuration
+	initGroup.POST("/del", mw.CheckAdmin, admin.DelClientConfig) // Delete client initialization configuration
 
 	statistic := router.Group("/statistic", mw.CheckAdmin)
 	statistic.POST("/new_user_count", admin.NewUserCount)
@@ -204,7 +204,7 @@ func SetAdminRoute(router gin.IRouter, admin *Api, mw *chatmw.MW, cfg *Config, c
 	enterpriseGroup.POST("/delete", mw.CheckAdmin, admin.DeleteEnterpriseInfo)
 	enterpriseGroup.POST("/update", mw.CheckAdmin, admin.UpdateEnterpriseInfo)
 	enterpriseGroup.POST("/get", mw.CheckAdmin, admin.GetEnterpriseInfo)
-	enterpriseGroup.POST("/query", mw.CheckAdmin, admin.QueryEnterpriseList)
+	enterpriseGroup.POST("/query", admin.QueryEnterpriseList)
 
 	var etcdClient *clientv3.Client
 	if cfg.Discovery.Enable == kdisc.ETCDCONST {
