@@ -549,6 +549,8 @@ message AddEnterpriseInfoReq {
   string address = 6;
   string phoneNumber = 7;
   string email = 8;
+  string invoice = 9;
+  string remark = 10;
 }
 
 
@@ -567,6 +569,8 @@ message UpdateEnterpriseInfoReq {
   optional string address = 8;
   optional string phoneNumber = 9;
   optional string email = 10;
+  optional string invoice = 11;
+  optional string remark = 12;
 }
 
 message UpdateEnterpriseInfoResp {
@@ -611,6 +615,8 @@ message EnterpriseInfo{
   string phoneNumber = 8;
   string email = 9;
   int64 createTime = 10;
+  string invoice = 11;
+  string remark = 12;
 }
 
 message QueryEnterpriseListResp {

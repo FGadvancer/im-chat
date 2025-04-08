@@ -42,6 +42,8 @@ func (o *adminServer) AddEnterpriseInfo(ctx context.Context, req *adminpb.AddEnt
 		Address:               req.Address,
 		PhoneNumber:           req.PhoneNumber,
 		Email:                 req.Email,
+		Invoice:               req.Invoice,
+		Remark:                req.Remark,
 		CreateTime:            time.Now(),
 	}
 	if err := o.Database.AddEnterpriseInfo(ctx, val); err != nil {
@@ -86,6 +88,12 @@ func (o *adminServer) UpdateEnterpriseInfo(ctx context.Context, req *adminpb.Upd
 	if req.Email != nil {
 		update["email"] = *req.Email
 	}
+	if req.Invoice != nil {
+		update["invoice"] = *req.Invoice
+	}
+	if req.Remark != nil {
+		update["remark"] = *req.Remark
+	}
 	if err := o.Database.UpdateEnterpriseInfo(ctx, oid, update); err != nil {
 		return nil, err
 	}
@@ -129,6 +137,8 @@ func (o *adminServer) GetEnterpriseInfo(ctx context.Context, req *adminpb.GetEnt
 			Address:               enterprise.Address,
 			PhoneNumber:           enterprise.PhoneNumber,
 			Email:                 enterprise.Email,
+			Invoice:               enterprise.Invoice,
+			Remark:                enterprise.Remark,
 			CreateTime:            enterprise.CreateTime.UnixMilli(),
 		},
 	}, nil
@@ -151,6 +161,8 @@ func (o *adminServer) QueryEnterpriseList(ctx context.Context, req *adminpb.Quer
 			Address:               enterprise.Address,
 			PhoneNumber:           enterprise.PhoneNumber,
 			Email:                 enterprise.Email,
+			Invoice:               enterprise.Invoice,
+			Remark:                enterprise.Remark,
 			CreateTime:            enterprise.CreateTime.UnixMilli(),
 		})
 	}

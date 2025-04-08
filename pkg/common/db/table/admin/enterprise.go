@@ -34,6 +34,8 @@ type EnterpriseInfo struct {
 	PhoneNumber           string             `bson:"phone_number"`
 	Email                 string             `bson:"email"`
 	CreateTime            time.Time          `bson:"create_time"`
+	Invoice               string             `bson:"invoice"`
+	Remark                string             `bson:"remark"`
 }
 
 func (EnterpriseInfo) TableName() string {
