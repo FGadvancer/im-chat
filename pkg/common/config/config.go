@@ -112,6 +112,7 @@ type Chat struct {
 		ListenIP   string `mapstructure:"listenIP"`
 		Ports      []int  `mapstructure:"ports"`
 	} `mapstructure:"rpc"`
+	SuperUser  SuperUser  `mapstructure:"superUser"`
 	VerifyCode VerifyCode `mapstructure:"verifyCode"`
 	LiveKit    struct {
 		URL    string `mapstructure:"url"`
@@ -119,6 +120,11 @@ type Chat struct {
 		Secret string `mapstructure:"secret"`
 	} `mapstructure:"liveKit"`
 	AllowRegister bool `mapstructure:"allowRegister"`
+}
+
+type SuperUser struct {
+	Phone  string `mapstructure:"phone"`
+	UserID string `mapstructure:"userID"`
 }
 
 type VerifyCode struct {

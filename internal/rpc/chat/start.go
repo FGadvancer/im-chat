@@ -72,6 +72,7 @@ func Start(ctx context.Context, config *Config, client discovery.SvcDiscoveryReg
 		ValidTime:  time.Duration(config.RpcConfig.VerifyCode.ValidTime) * time.Second,
 		Len:        config.RpcConfig.VerifyCode.Len,
 	}
+	srv.SuperUser = config.RpcConfig.SuperUser
 	srv.Livekit = rtc.NewLiveKit(config.RpcConfig.LiveKit.Key, config.RpcConfig.LiveKit.Secret, config.RpcConfig.LiveKit.URL)
 	srv.AllowRegister = config.RpcConfig.AllowRegister
 	chat.RegisterChatServer(server, &srv)
@@ -86,6 +87,7 @@ type chatSvr struct {
 	SMS             sms.SMS
 	Mail            email.Mail
 	Code            verifyCode
+	SuperUser       config.SuperUser
 	Livekit         *rtc.LiveKit
 	ChatAdminUserID string
 	AllowRegister   bool
