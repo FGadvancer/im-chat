@@ -152,7 +152,9 @@ func (x *LoginReq) Check() error {
 			return err
 		}
 		if x.PhoneNumber == "" {
-			return errs.ErrArgs.WrapMsg("PhoneNumber is empty")
+			if x.Account == "" {
+				return errs.ErrArgs.WrapMsg("PhoneNumber is empty")
+			}
 		} else if err := PhoneNumberCheck(x.PhoneNumber); err != nil {
 			return err
 		}
