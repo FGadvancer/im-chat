@@ -453,12 +453,21 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 	default:
 		return nil, errs.ErrArgs.WrapMsg("account or phone number or email must be set")
 	}
-	credential, err = o.Database.TakeCredentialByAccount(ctx, acc)
-	if err != nil {
-		if dbutil.IsDBNotFound(err) {
+	if req.Account != "" {
+		credentials, err := o.Database.TakeCredentialsByUserID(ctx, acc)
+		if err != nil {
+			return nil, err
+		} else if len(credentials) == 0 {
 			return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
 		}
-		return nil, err
+	} else {
+		credential, err = o.Database.TakeCredentialByAccount(ctx, acc)
+		if err != nil {
+			if dbutil.IsDBNotFound(err) {
+				return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
+			}
+			return nil, err
+		}
 	}
 	if err := o.Admin.CheckLogin(ctx, credential.UserID, req.Ip); err != nil {
 		return nil, err
