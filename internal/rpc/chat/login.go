@@ -460,6 +460,7 @@ func (o *chatSvr) Login(ctx context.Context, req *chat.LoginReq) (*chat.LoginRes
 		} else if len(credentials) == 0 {
 			return nil, eerrs.ErrAccountNotFound.WrapMsg("user unregistered")
 		}
+		credential = credentials[0]
 	} else {
 		credential, err = o.Database.TakeCredentialByAccount(ctx, acc)
 		if err != nil {
