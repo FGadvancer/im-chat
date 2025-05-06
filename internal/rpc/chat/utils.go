@@ -134,7 +134,7 @@ func (o *chatSvr) checkRegisterInfo(ctx context.Context, user *chat.RegisterUser
 		if !stringutil.IsValidEmail(user.Email) {
 			return errs.ErrArgs.WrapMsg("invalid email")
 		}
-		_, err := o.Database.TakeAttributeByAccount(ctx, user.Email)
+		_, err := o.Database.TakeAttributeByEmail(ctx, user.Email)
 		if err == nil {
 			return eerrs.ErrEmailAlreadyRegister.Wrap()
 		} else if !dbutil.IsDBNotFound(err) {
