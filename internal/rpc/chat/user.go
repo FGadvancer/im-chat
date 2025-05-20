@@ -346,7 +346,7 @@ func (o *chatSvr) SearchUserFullInfo(ctx context.Context, req *chat.SearchUserFu
 	}
 	return &chat.SearchUserFullInfoResp{
 		Total: uint32(total),
-		Users: DbToPbUserFullInfos(list, false),
+		Users: DbToPbUserFullInfos(list, true),
 	}, nil
 }
 
