@@ -66,6 +66,16 @@ func CheckAdmin(ctx context.Context) (string, error) {
 	}
 	return userID, nil
 }
+func CheckAdminBool(ctx context.Context) (bool, error) {
+	_, userType, err := Check(ctx)
+	if err != nil {
+		return false, err
+	}
+	if userType != constant.AdminUser {
+		return false, nil
+	}
+	return true, nil
+}
 
 func CheckUser(ctx context.Context) (string, error) {
 	userID, userType, err := Check(ctx)

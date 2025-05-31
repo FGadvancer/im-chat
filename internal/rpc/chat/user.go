@@ -337,16 +337,22 @@ func (o *chatSvr) FindUserFullInfo(ctx context.Context, req *chat.FindUserFullIn
 }
 
 func (o *chatSvr) SearchUserFullInfo(ctx context.Context, req *chat.SearchUserFullInfoReq) (*chat.SearchUserFullInfoResp, error) {
-	if _, _, err := mctx.Check(ctx); err != nil {
+	var isShowPhoneNumber bool
+	isAdmin, err := mctx.CheckAdminBool(ctx)
+	if err != nil {
 		return nil, err
 	}
+	if isAdmin {
+		isShowPhoneNumber = true
+	}
+
 	total, list, err := o.Database.Search(ctx, req.Normal, req.Keyword, req.Genders, req.Pagination)
 	if err != nil {
 		return nil, err
 	}
 	return &chat.SearchUserFullInfoResp{
 		Total: uint32(total),
-		Users: DbToPbUserFullInfos(list, true),
+		Users: DbToPbUserFullInfos(list, isShowPhoneNumber),
 	}, nil
 }
 
