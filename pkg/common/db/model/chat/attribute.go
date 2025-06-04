@@ -153,6 +153,7 @@ func (o *Attribute) SearchNormalUser(ctx context.Context, keyword string, forbid
 	}
 	if escapedKeyword != "" {
 		filter["$or"] = []bson.M{
+			{"user_id": keyword},
 			{"nickname": bson.M{"$regex": escapedKeyword, "$options": "i"}},
 			{"enterprise": bson.M{"$regex": escapedKeyword, "$options": "i"}},
 			{"tags": bson.M{"$regex": escapedKeyword, "$options": "i"}},
