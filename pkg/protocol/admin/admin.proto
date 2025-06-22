@@ -546,11 +546,13 @@ message AddEnterpriseInfoReq {
   string website = 3;
   bool isEligibleForCashback = 4;
   repeated string tags = 5;
-  string address = 6;
-  string phoneNumber = 7;
-  string email = 8;
-  string invoice = 9;
-  string remark = 10;
+  repeated int32  tagsTypes = 6;
+  string address = 7;
+  string phoneNumber = 8;
+  string email = 9;
+  string invoice = 10;
+  string remark = 11;
+  repeated string contacts = 12; // List of contact user IDs
 }
 
 
@@ -566,11 +568,14 @@ message UpdateEnterpriseInfoReq {
   optional bool isEligibleForCashback = 5;
   repeated string tags = 6;
   bool clearTags = 7;
-  optional string address = 8;
-  optional string phoneNumber = 9;
-  optional string email = 10;
-  optional string invoice = 11;
-  optional string remark = 12;
+  repeated int32 tagsTypes = 8;
+  optional string address = 9;
+  optional string phoneNumber = 10;
+  optional string email = 11;
+  optional string invoice = 12;
+  optional string remark = 13;
+  repeated string contacts = 14;
+  bool clearContacts = 15;
 }
 
 message UpdateEnterpriseInfoResp {
@@ -611,12 +616,14 @@ message EnterpriseInfo{
   string website = 4;
   bool isEligibleForCashback = 5;
   repeated string tags = 6;
-  string address = 7;
-  string phoneNumber = 8;
-  string email = 9;
-  int64 createTime = 10;
-  string invoice = 11;
-  string remark = 12;
+  repeated int32 tagsTypes = 7;
+  string address = 8;
+  string phoneNumber = 9;
+  string email = 10;
+  int64 createTime = 11;
+  string invoice = 12;
+  string remark = 13;
+  repeated string contacts = 14; // List of contact user IDs
 }
 
 message QueryEnterpriseListResp {

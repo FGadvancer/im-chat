@@ -39,12 +39,14 @@ func (o *adminServer) AddEnterpriseInfo(ctx context.Context, req *adminpb.AddEnt
 		Website:               req.Website,
 		IsEligibleForCashback: req.IsEligibleForCashback,
 		Tags:                  req.Tags,
+		TagsTypes:             req.TagsTypes,
 		Address:               req.Address,
 		PhoneNumber:           req.PhoneNumber,
 		Email:                 req.Email,
 		Invoice:               req.Invoice,
 		Remark:                req.Remark,
 		CreateTime:            time.Now(),
+		Contacts:              req.Contacts,
 	}
 	if err := o.Database.AddEnterpriseInfo(ctx, val); err != nil {
 		log.ZWarn(ctx, "add enterprise info failed", err)
@@ -79,6 +81,9 @@ func (o *adminServer) UpdateEnterpriseInfo(ctx context.Context, req *adminpb.Upd
 	if req.ClearTags {
 		update["tags"] = []string{}
 	}
+	if len(req.TagsTypes) > 0 {
+		update["tags_types"] = req.TagsTypes
+	}
 	if req.Address != nil {
 		update["address"] = *req.Address
 	}
@@ -93,6 +98,12 @@ func (o *adminServer) UpdateEnterpriseInfo(ctx context.Context, req *adminpb.Upd
 	}
 	if req.Remark != nil {
 		update["remark"] = *req.Remark
+	}
+	if len(req.Contacts) > 0 {
+		update["contacts"] = req.Tags
+	}
+	if req.ClearContacts {
+		update["contacts"] = []string{}
 	}
 	if err := o.Database.UpdateEnterpriseInfo(ctx, oid, update); err != nil {
 		return nil, err
@@ -127,20 +138,7 @@ func (o *adminServer) GetEnterpriseInfo(ctx context.Context, req *adminpb.GetEnt
 		return nil, err
 	}
 	return &adminpb.GetEnterpriseInfoResp{
-		Enterprise: &adminpb.EnterpriseInfo{
-			EnterpriseID:          enterprise.EnterpriseID.Hex(),
-			Name:                  enterprise.Name,
-			Logo:                  enterprise.Logo,
-			Website:               enterprise.Website,
-			IsEligibleForCashback: enterprise.IsEligibleForCashback,
-			Tags:                  enterprise.Tags,
-			Address:               enterprise.Address,
-			PhoneNumber:           enterprise.PhoneNumber,
-			Email:                 enterprise.Email,
-			Invoice:               enterprise.Invoice,
-			Remark:                enterprise.Remark,
-			CreateTime:            enterprise.CreateTime.UnixMilli(),
-		},
+		Enterprise: ConvertEnterpriseToPB(enterprise),
 	}, nil
 }
 
@@ -151,20 +149,7 @@ func (o *adminServer) QueryEnterpriseList(ctx context.Context, req *adminpb.Quer
 	}
 	resp := &adminpb.QueryEnterpriseListResp{Total: int32(total), Enterprises: make([]*adminpb.EnterpriseInfo, 0, len(enterprises))}
 	for _, enterprise := range enterprises {
-		resp.Enterprises = append(resp.Enterprises, &adminpb.EnterpriseInfo{
-			EnterpriseID:          enterprise.EnterpriseID.Hex(),
-			Name:                  enterprise.Name,
-			Logo:                  enterprise.Logo,
-			Website:               enterprise.Website,
-			IsEligibleForCashback: enterprise.IsEligibleForCashback,
-			Tags:                  enterprise.Tags,
-			Address:               enterprise.Address,
-			PhoneNumber:           enterprise.PhoneNumber,
-			Email:                 enterprise.Email,
-			Invoice:               enterprise.Invoice,
-			Remark:                enterprise.Remark,
-			CreateTime:            enterprise.CreateTime.UnixMilli(),
-		})
+		resp.Enterprises = append(resp.Enterprises, ConvertEnterpriseToPB(enterprise))
 	}
 	return resp, nil
 }

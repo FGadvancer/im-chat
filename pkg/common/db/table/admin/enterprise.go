@@ -30,12 +30,14 @@ type EnterpriseInfo struct {
 	Website               string             `bson:"website"`
 	IsEligibleForCashback bool               `bson:"is_eligible_for_cashback"`
 	Tags                  []string           `bson:"tags"`
+	TagsTypes             []int32            `bson:"tags_types"`
 	Address               string             `bson:"address"`
 	PhoneNumber           string             `bson:"phone_number"`
 	Email                 string             `bson:"email"`
 	CreateTime            time.Time          `bson:"create_time"`
 	Invoice               string             `bson:"invoice"`
 	Remark                string             `bson:"remark"`
+	Contacts              []string           `bson:"contacts"`
 }
 
 func (EnterpriseInfo) TableName() string {
