@@ -100,7 +100,7 @@ func (o *adminServer) UpdateEnterpriseInfo(ctx context.Context, req *adminpb.Upd
 		update["remark"] = *req.Remark
 	}
 	if len(req.Contacts) > 0 {
-		update["contacts"] = req.Tags
+		update["contacts"] = req.Contacts
 	}
 	if req.ClearContacts {
 		update["contacts"] = []string{}
