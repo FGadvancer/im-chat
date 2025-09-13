@@ -15,9 +15,13 @@
 package util
 
 import (
+	"context"
+	"crypto/rand"
 	"fmt"
+	"math/big"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 // OutDir creates the absolute path name from path and checks path exists.
@@ -49,4 +53,32 @@ func ExitWithError(err error) {
 func SIGTERMExit() {
 	programName := filepath.Base(os.Args[0])
 	fmt.Fprintf(os.Stderr, "Warning %s receive process terminal SIGTERM exit 0\n", programName)
+}
+
+// ---------- Helpers ----------
+
+func ToMillis(t time.Time) int64 {
+	if t.IsZero() {
+		return 0
+	}
+	return t.UnixMilli()
+}
+
+// NewReadableOrderID creates a human-friendly alphanumeric ID.
+// Default: "PO-YYYYMMDD-XXXXXX" where X is base36.
+// NOTE: replace this with your daily-sequence generator if you adopt the atomic-seq design.
+func NewReadableOrderID(_ context.Context) (string, error) {
+	const alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	day := time.Now().Format("20060102")
+	// 6 chars base36 pseudo-random tail
+	n := 6
+	buf := make([]byte, n)
+	for i := 0; i < n; i++ {
+		v, err := rand.Int(rand.Reader, big.NewInt(36))
+		if err != nil {
+			return "", err
+		}
+		buf[i] = alphabet[v.Int64()]
+	}
+	return fmt.Sprintf("PO-%s-%s", day, string(buf)), nil
 }

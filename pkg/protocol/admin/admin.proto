@@ -631,6 +631,160 @@ message QueryEnterpriseListResp {
   int32 total = 2;
 }
 
+message AddProcurementOderReq {
+  string vendor = 1;                       /// Manufacturer
+  string integrator = 2;                   // Integrator/Reseller
+  string endCustomer = 3;                  // End customer
+  int64 purchaseAmount = 4;                 // Amount in cents
+  int32 paymentTermDays = 5;               // Payment term in days
+  string originOrgName = 6;                // Originating organization
+  string contactName = 7;                  // Contact name
+  string contactPhone = 8;                 // Contact phone
+  string contactEmail = 9;                 // Contact email (optional)
+  string remark = 10;                      // Remark (optional)
+}
+
+message AddProcurementOderResp {
+  string orderID = 1;                      // Business order ID (alphanumeric)
+}
+
+message UpdateProcurementOderReq {
+  string orderID = 1;
+
+  optional string vendor = 2;
+  optional string integrator = 3;
+  optional string endCustomer = 4;
+  optional int64 purchaseAmount = 5;
+  optional int32 paymentTermDays = 6;
+  optional string originOrgName = 7;
+  optional string contactName = 8;
+  optional string contactPhone = 9;
+  optional string contactEmail = 10;
+  optional string remark = 11;
+  optional int32 status = 12;  // e.g., 0 unread, 1 read, 2 approved, 3 rejected, 4 completed
+}
+
+message UpdateProcurementOderResp {}
+
+message DeleteProcurementOderReq {
+  string orderID = 1;
+}
+
+message DeleteProcurementOderResp {}
+
+message GetProcurementOderReq {
+  string orderID = 1;
+}
+
+message ProcurementOder {
+  string orderID = 1;
+  int32 status = 2;
+  int64 readAt = 3;
+  int64 processedAt = 4;
+
+  string vendor = 5;
+  string integrator = 6;
+  string endCustomer = 7;
+  int64 purchaseAmount = 8;
+  int32 paymentTermDays = 9;
+  string originOrgName = 10;
+  string contactName = 11;
+  string contactPhone = 12;
+  string contactEmail = 13;
+  string remark = 14;
+  int64 createTime = 15;
+}
+
+message GetProcurementOderResp {
+  ProcurementOder procurementOrder = 1;
+}
+
+message QueryProcurementOderListReq {
+  RequestPagination pagination = 1;
+  string keyword = 2;                      // Matches orderID or contactPhone
+  optional int32 status = 3;               // Optional status filter）
+  optional int64 startCreateTime = 4;      // Unix ms inclusive
+  optional int64 endCreateTime = 5;        // Unix ms inclusive
+
+}
+
+message QueryProcurementOderListResp {
+  repeated ProcurementOder procurementOrders = 1;
+  int32 total = 2;
+}
+
+message CountProcurementOderByStatusReq {
+  int32 status = 1;
+}
+
+message CountProcurementOderByStatusResp {
+  int32 count = 1;
+}
+
+
+message AddRebateOderReq {
+  string procurementOrderID = 1;          // optional, source procurement order
+  string contractNumber = 2;
+  int64 invoiceAmount = 3;                 // cents
+  int64 invoiceDate = 4;                   // unix ms
+  string customerName = 5;
+  string customerBankAccount = 6;
+  string remark = 7;
+}
+message AddRebateOderResp { string orderID = 1; }
+
+message UpdateRebateOderReq {
+  string orderID = 1;
+
+  optional string procurementOrderID = 2;
+  optional string contractNumber = 3;
+  optional int64 invoiceAmount = 4;
+  optional int64 invoiceDate = 5;
+  optional string customerName = 6;
+  optional string customerBankAccount = 7;
+  optional string remark = 8;
+
+  optional int32 status = 9;               // 0 unread, 1 read, 2 approved, 3 rejected, 4 completed
+}
+message UpdateRebateOderResp {}
+
+message DeleteRebateOderReq { string orderID = 1; }
+message DeleteRebateOderResp {}
+
+message GetRebateOderReq { string orderID = 1; }
+
+message RebateOder {
+  string orderID = 1;
+  int32 status = 2;
+  int64 readAt = 3;                        // unix ms (0 if unset)
+  int64 processedAt = 4;                   // unix ms (0 if unset)
+
+  string procurementOrderID = 5;
+  string contractNumber = 6;
+  int64 invoiceAmount = 7;
+  int64 invoiceDate = 8;                   // unix ms
+  string customerName = 9;
+  string customerBankAccount = 10;
+  string remark = 11;
+  int64 createTime = 12;                   // unix ms
+}
+message GetRebateOderResp { RebateOder rebateOrder = 1; }
+
+message QueryRebateOderListReq {
+  RequestPagination pagination = 1;
+  string keyword = 2;                      // matches orderID/contractNumber/customerName
+  optional int32 status = 3;
+  optional int64 startCreateTime = 4;      // unix ms inclusive
+  optional int64 endCreateTime = 5;        // unix ms inclusive
+}
+message QueryRebateOderListResp {
+  repeated RebateOder rebateOrders = 1;
+  int32 total = 2;
+}
+
+message CountRebateOderByStatusReq { int32 status = 1; }
+message CountRebateOderByStatusResp { int32 count = 1; }
+
 service admin {
   // Login
   rpc Login(LoginReq) returns (LoginResp);
@@ -709,9 +863,25 @@ service admin {
   rpc UpdateApplicationVersion(UpdateApplicationVersionReq) returns (UpdateApplicationVersionResp);
   rpc DeleteApplicationVersion(DeleteApplicationVersionReq) returns (DeleteApplicationVersionResp);
   rpc PageApplicationVersion(PageApplicationVersionReq) returns (PageApplicationVersionResp);
+
   rpc AddEnterpriseInfo(AddEnterpriseInfoReq) returns (AddEnterpriseInfoResp);
   rpc UpdateEnterpriseInfo(UpdateEnterpriseInfoReq) returns (UpdateEnterpriseInfoResp);
   rpc DeleteEnterpriseInfo(DeleteEnterpriseInfoReq) returns (DeleteEnterpriseInfoResp);
   rpc GetEnterpriseInfo(GetEnterpriseInfoReq) returns (GetEnterpriseInfoResp);
   rpc QueryEnterpriseList(QueryEnterpriseListReq) returns (QueryEnterpriseListResp);
+
+  rpc AddProcurementOder(AddProcurementOderReq) returns (AddProcurementOderResp);
+  rpc UpdateProcurementOder(UpdateProcurementOderReq) returns (UpdateProcurementOderResp);
+  rpc DeleteProcurementOder(DeleteProcurementOderReq) returns (DeleteProcurementOderResp);
+  rpc GetProcurementOder(GetProcurementOderReq) returns (GetProcurementOderResp);
+  rpc QueryProcurementOderList(QueryProcurementOderListReq) returns (QueryProcurementOderListResp);
+  rpc CountProcurementOderByStatus(CountProcurementOderByStatusReq) returns (CountProcurementOderByStatusResp);
+
+  rpc AddRebateOder(AddRebateOderReq) returns (AddRebateOderResp);
+  rpc UpdateRebateOder(UpdateRebateOderReq) returns (UpdateRebateOderResp);
+  rpc DeleteRebateOder(DeleteRebateOderReq) returns (DeleteRebateOderResp);
+  rpc GetRebateOder(GetRebateOderReq) returns (GetRebateOderResp);
+  rpc QueryRebateOderList(QueryRebateOderListReq) returns (QueryRebateOderListResp);
+  rpc CountRebateOderByStatus(CountRebateOderByStatusReq) returns (CountRebateOderByStatusResp);
+
 }

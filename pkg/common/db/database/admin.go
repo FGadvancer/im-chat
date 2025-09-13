@@ -91,6 +91,18 @@ type AdminDatabaseInterface interface {
 	UpdateEnterpriseInfo(ctx context.Context, id primitive.ObjectID, update map[string]any) error
 	DeleteEnterpriseInfo(ctx context.Context, enterpriseID primitive.ObjectID) error
 	SearchEnterpriseInfo(ctx context.Context, keyword string, pagination pagination.Pagination) (int64, []*admindb.EnterpriseInfo, error)
+	AddProcurementOrder(ctx context.Context, po *admindb.ProcurementOrder) error
+	UpdateProcurementOrder(ctx context.Context, orderID string, update map[string]any) error
+	DeleteProcurementOrder(ctx context.Context, orderID string) error
+	GetProcurementOrder(ctx context.Context, orderID string) (*admindb.ProcurementOrder, error)
+	SearchProcurementOrder(ctx context.Context, keyword string, status *int32, start, end *time.Time, pg pagination.Pagination) (int64, []*admindb.ProcurementOrder, error)
+	CountProcurementOrderByStatus(ctx context.Context, status int32) (int64, error)
+	AddRebateOrder(ctx context.Context, ro *admindb.RebateOrder) error
+	UpdateRebateOrder(ctx context.Context, orderID string, update map[string]any) error
+	DeleteRebateOrder(ctx context.Context, orderID string) error
+	GetRebateOrder(ctx context.Context, orderID string) (*admindb.RebateOrder, error)
+	SearchRebateOrder(ctx context.Context, keyword string, status *int32, start, end *time.Time, pg pagination.Pagination) (int64, []*admindb.RebateOrder, error)
+	CountRebateOrderByStatus(ctx context.Context, status int32) (int64, error)
 }
 
 func NewAdminDatabase(cli *mongoutil.Client, rdb redis.UniversalClient) (AdminDatabaseInterface, error) {
@@ -138,6 +150,14 @@ func NewAdminDatabase(cli *mongoutil.Client, rdb redis.UniversalClient) (AdminDa
 	if err != nil {
 		return nil, err
 	}
+	ProcurementOrder, err := admin.NewProcurementOrder(cli.GetDB())
+	if err != nil {
+		return nil, err
+	}
+	RebateOrder, err := admin.NewRebateOrder(cli.GetDB())
+	if err != nil {
+		return nil, err
+	}
 
 	return &AdminDatabase{
 		tx:                 cli.GetTx(),
@@ -152,6 +172,8 @@ func NewAdminDatabase(cli *mongoutil.Client, rdb redis.UniversalClient) (AdminDa
 		clientConfig:       clientConfig,
 		application:        application,
 		enterprise:         enterprise,
+		procurementOrder:   ProcurementOrder,
+		rebateOrder:        RebateOrder,
 		cache:              cache.NewTokenInterface(rdb),
 	}, nil
 }
@@ -169,7 +191,57 @@ type AdminDatabase struct {
 	clientConfig       admindb.ClientConfigInterface
 	application        admindb.ApplicationInterface
 	enterprise         admindb.EnterpriseInfoInterface
+	procurementOrder   admindb.ProcurementOrderInterface
+	rebateOrder        admindb.RebateOrderInterface
 	cache              cache.TokenInterface
+}
+
+func (o *AdminDatabase) AddRebateOrder(ctx context.Context, ro *admindb.RebateOrder) error {
+	return o.rebateOrder.Add(ctx, ro)
+}
+
+func (o *AdminDatabase) UpdateRebateOrder(ctx context.Context, orderID string, update map[string]any) error {
+	return o.rebateOrder.Update(ctx, orderID, update)
+}
+
+func (o *AdminDatabase) DeleteRebateOrder(ctx context.Context, orderID string) error {
+	return o.rebateOrder.Delete(ctx, orderID)
+}
+
+func (o *AdminDatabase) GetRebateOrder(ctx context.Context, orderID string) (*admindb.RebateOrder, error) {
+	return o.rebateOrder.GetByOrderID(ctx, orderID)
+}
+
+func (o *AdminDatabase) SearchRebateOrder(ctx context.Context, keyword string, status *int32, start, end *time.Time, pg pagination.Pagination) (int64, []*admindb.RebateOrder, error) {
+	return o.rebateOrder.Search(ctx, keyword, status, start, end, pg)
+}
+
+func (o *AdminDatabase) CountRebateOrderByStatus(ctx context.Context, status int32) (int64, error) {
+	return o.rebateOrder.CountByStatus(ctx, status)
+}
+
+func (o *AdminDatabase) AddProcurementOrder(ctx context.Context, po *admindb.ProcurementOrder) error {
+	return o.procurementOrder.Add(ctx, po)
+}
+
+func (o *AdminDatabase) UpdateProcurementOrder(ctx context.Context, orderID string, update map[string]any) error {
+	return o.procurementOrder.Update(ctx, orderID, update)
+}
+
+func (o *AdminDatabase) DeleteProcurementOrder(ctx context.Context, orderID string) error {
+	return o.procurementOrder.Delete(ctx, orderID)
+}
+
+func (o *AdminDatabase) GetProcurementOrder(ctx context.Context, orderID string) (*admindb.ProcurementOrder, error) {
+	return o.procurementOrder.GetByOrderID(ctx, orderID)
+}
+
+func (o *AdminDatabase) SearchProcurementOrder(ctx context.Context, keyword string, status *int32, start, end *time.Time, pg pagination.Pagination) (int64, []*admindb.ProcurementOrder, error) {
+	return o.procurementOrder.Search(ctx, keyword, status, start, end, pg)
+}
+
+func (o *AdminDatabase) CountProcurementOrderByStatus(ctx context.Context, status int32) (int64, error) {
+	return o.procurementOrder.CountByStatus(ctx, status)
 }
 
 func (o *AdminDatabase) AddEnterpriseInfo(ctx context.Context, info *admindb.EnterpriseInfo) error {

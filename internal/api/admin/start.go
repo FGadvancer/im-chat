@@ -206,6 +206,22 @@ func SetAdminRoute(router gin.IRouter, admin *Api, mw *chatmw.MW, cfg *Config, c
 	enterpriseGroup.POST("/get", mw.CheckAdmin, admin.GetEnterpriseInfo)
 	enterpriseGroup.POST("/query", admin.QueryEnterpriseList)
 
+	procurementGroup := router.Group("procurement")
+	procurementGroup.POST("/add", admin.AddProcurementOder)
+	procurementGroup.POST("/delete", mw.CheckAdmin, admin.DeleteProcurementOder)
+	procurementGroup.POST("/update", mw.CheckAdmin, admin.UpdateProcurementOder)
+	procurementGroup.POST("/get", mw.CheckAdmin, admin.GetProcurementOder)
+	procurementGroup.POST("/query", mw.CheckAdmin, admin.QueryProcurementOderList)
+	procurementGroup.POST("/count_by_status", mw.CheckAdmin, admin.CountProcurementOderByStatus)
+
+	rebateGroup := router.Group("rebate")
+	rebateGroup.POST("/add", admin.AddRebateOder)
+	rebateGroup.POST("/delete", mw.CheckAdmin, admin.DeleteRebateOder)
+	rebateGroup.POST("/update", mw.CheckAdmin, admin.UpdateRebateOder)
+	rebateGroup.POST("/get", mw.CheckAdmin, admin.GetRebateOder)
+	rebateGroup.POST("/query", admin.QueryRebateOderList)
+	rebateGroup.POST("/count_by_status", mw.CheckAdmin, admin.CountRebateOderByStatus)
+
 	var etcdClient *clientv3.Client
 	if cfg.Discovery.Enable == kdisc.ETCDCONST {
 		etcdClient = client.(*etcd.SvcDiscoveryRegistryImpl).GetClient()

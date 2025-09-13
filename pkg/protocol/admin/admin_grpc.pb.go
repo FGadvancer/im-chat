@@ -19,63 +19,75 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Admin_Login_FullMethodName                    = "/openim.admin.admin/Login"
-	Admin_ChangePassword_FullMethodName           = "/openim.admin.admin/ChangePassword"
-	Admin_AdminUpdateInfo_FullMethodName          = "/openim.admin.admin/AdminUpdateInfo"
-	Admin_GetAdminInfo_FullMethodName             = "/openim.admin.admin/GetAdminInfo"
-	Admin_AddAdminAccount_FullMethodName          = "/openim.admin.admin/AddAdminAccount"
-	Admin_ChangeAdminPassword_FullMethodName      = "/openim.admin.admin/ChangeAdminPassword"
-	Admin_DelAdminAccount_FullMethodName          = "/openim.admin.admin/DelAdminAccount"
-	Admin_SearchAdminAccount_FullMethodName       = "/openim.admin.admin/SearchAdminAccount"
-	Admin_AddDefaultFriend_FullMethodName         = "/openim.admin.admin/AddDefaultFriend"
-	Admin_DelDefaultFriend_FullMethodName         = "/openim.admin.admin/DelDefaultFriend"
-	Admin_FindDefaultFriend_FullMethodName        = "/openim.admin.admin/FindDefaultFriend"
-	Admin_SearchDefaultFriend_FullMethodName      = "/openim.admin.admin/SearchDefaultFriend"
-	Admin_AddDefaultGroup_FullMethodName          = "/openim.admin.admin/AddDefaultGroup"
-	Admin_DelDefaultGroup_FullMethodName          = "/openim.admin.admin/DelDefaultGroup"
-	Admin_FindDefaultGroup_FullMethodName         = "/openim.admin.admin/FindDefaultGroup"
-	Admin_SearchDefaultGroup_FullMethodName       = "/openim.admin.admin/SearchDefaultGroup"
-	Admin_AddInvitationCode_FullMethodName        = "/openim.admin.admin/AddInvitationCode"
-	Admin_GenInvitationCode_FullMethodName        = "/openim.admin.admin/GenInvitationCode"
-	Admin_FindInvitationCode_FullMethodName       = "/openim.admin.admin/FindInvitationCode"
-	Admin_UseInvitationCode_FullMethodName        = "/openim.admin.admin/UseInvitationCode"
-	Admin_DelInvitationCode_FullMethodName        = "/openim.admin.admin/DelInvitationCode"
-	Admin_SearchInvitationCode_FullMethodName     = "/openim.admin.admin/SearchInvitationCode"
-	Admin_SearchUserIPLimitLogin_FullMethodName   = "/openim.admin.admin/SearchUserIPLimitLogin"
-	Admin_AddUserIPLimitLogin_FullMethodName      = "/openim.admin.admin/AddUserIPLimitLogin"
-	Admin_DelUserIPLimitLogin_FullMethodName      = "/openim.admin.admin/DelUserIPLimitLogin"
-	Admin_SearchIPForbidden_FullMethodName        = "/openim.admin.admin/SearchIPForbidden"
-	Admin_AddIPForbidden_FullMethodName           = "/openim.admin.admin/AddIPForbidden"
-	Admin_DelIPForbidden_FullMethodName           = "/openim.admin.admin/DelIPForbidden"
-	Admin_CancellationUser_FullMethodName         = "/openim.admin.admin/CancellationUser"
-	Admin_BlockUser_FullMethodName                = "/openim.admin.admin/BlockUser"
-	Admin_UnblockUser_FullMethodName              = "/openim.admin.admin/UnblockUser"
-	Admin_SearchBlockUser_FullMethodName          = "/openim.admin.admin/SearchBlockUser"
-	Admin_FindUserBlockInfo_FullMethodName        = "/openim.admin.admin/FindUserBlockInfo"
-	Admin_CheckRegisterForbidden_FullMethodName   = "/openim.admin.admin/CheckRegisterForbidden"
-	Admin_CheckLoginForbidden_FullMethodName      = "/openim.admin.admin/CheckLoginForbidden"
-	Admin_CreateToken_FullMethodName              = "/openim.admin.admin/CreateToken"
-	Admin_ParseToken_FullMethodName               = "/openim.admin.admin/ParseToken"
-	Admin_AddApplet_FullMethodName                = "/openim.admin.admin/AddApplet"
-	Admin_DelApplet_FullMethodName                = "/openim.admin.admin/DelApplet"
-	Admin_UpdateApplet_FullMethodName             = "/openim.admin.admin/UpdateApplet"
-	Admin_FindApplet_FullMethodName               = "/openim.admin.admin/FindApplet"
-	Admin_SearchApplet_FullMethodName             = "/openim.admin.admin/SearchApplet"
-	Admin_GetClientConfig_FullMethodName          = "/openim.admin.admin/GetClientConfig"
-	Admin_SetClientConfig_FullMethodName          = "/openim.admin.admin/SetClientConfig"
-	Admin_DelClientConfig_FullMethodName          = "/openim.admin.admin/DelClientConfig"
-	Admin_GetUserToken_FullMethodName             = "/openim.admin.admin/GetUserToken"
-	Admin_InvalidateToken_FullMethodName          = "/openim.admin.admin/InvalidateToken"
-	Admin_LatestApplicationVersion_FullMethodName = "/openim.admin.admin/LatestApplicationVersion"
-	Admin_AddApplicationVersion_FullMethodName    = "/openim.admin.admin/AddApplicationVersion"
-	Admin_UpdateApplicationVersion_FullMethodName = "/openim.admin.admin/UpdateApplicationVersion"
-	Admin_DeleteApplicationVersion_FullMethodName = "/openim.admin.admin/DeleteApplicationVersion"
-	Admin_PageApplicationVersion_FullMethodName   = "/openim.admin.admin/PageApplicationVersion"
-	Admin_AddEnterpriseInfo_FullMethodName        = "/openim.admin.admin/AddEnterpriseInfo"
-	Admin_UpdateEnterpriseInfo_FullMethodName     = "/openim.admin.admin/UpdateEnterpriseInfo"
-	Admin_DeleteEnterpriseInfo_FullMethodName     = "/openim.admin.admin/DeleteEnterpriseInfo"
-	Admin_GetEnterpriseInfo_FullMethodName        = "/openim.admin.admin/GetEnterpriseInfo"
-	Admin_QueryEnterpriseList_FullMethodName      = "/openim.admin.admin/QueryEnterpriseList"
+	Admin_Login_FullMethodName                        = "/openim.admin.admin/Login"
+	Admin_ChangePassword_FullMethodName               = "/openim.admin.admin/ChangePassword"
+	Admin_AdminUpdateInfo_FullMethodName              = "/openim.admin.admin/AdminUpdateInfo"
+	Admin_GetAdminInfo_FullMethodName                 = "/openim.admin.admin/GetAdminInfo"
+	Admin_AddAdminAccount_FullMethodName              = "/openim.admin.admin/AddAdminAccount"
+	Admin_ChangeAdminPassword_FullMethodName          = "/openim.admin.admin/ChangeAdminPassword"
+	Admin_DelAdminAccount_FullMethodName              = "/openim.admin.admin/DelAdminAccount"
+	Admin_SearchAdminAccount_FullMethodName           = "/openim.admin.admin/SearchAdminAccount"
+	Admin_AddDefaultFriend_FullMethodName             = "/openim.admin.admin/AddDefaultFriend"
+	Admin_DelDefaultFriend_FullMethodName             = "/openim.admin.admin/DelDefaultFriend"
+	Admin_FindDefaultFriend_FullMethodName            = "/openim.admin.admin/FindDefaultFriend"
+	Admin_SearchDefaultFriend_FullMethodName          = "/openim.admin.admin/SearchDefaultFriend"
+	Admin_AddDefaultGroup_FullMethodName              = "/openim.admin.admin/AddDefaultGroup"
+	Admin_DelDefaultGroup_FullMethodName              = "/openim.admin.admin/DelDefaultGroup"
+	Admin_FindDefaultGroup_FullMethodName             = "/openim.admin.admin/FindDefaultGroup"
+	Admin_SearchDefaultGroup_FullMethodName           = "/openim.admin.admin/SearchDefaultGroup"
+	Admin_AddInvitationCode_FullMethodName            = "/openim.admin.admin/AddInvitationCode"
+	Admin_GenInvitationCode_FullMethodName            = "/openim.admin.admin/GenInvitationCode"
+	Admin_FindInvitationCode_FullMethodName           = "/openim.admin.admin/FindInvitationCode"
+	Admin_UseInvitationCode_FullMethodName            = "/openim.admin.admin/UseInvitationCode"
+	Admin_DelInvitationCode_FullMethodName            = "/openim.admin.admin/DelInvitationCode"
+	Admin_SearchInvitationCode_FullMethodName         = "/openim.admin.admin/SearchInvitationCode"
+	Admin_SearchUserIPLimitLogin_FullMethodName       = "/openim.admin.admin/SearchUserIPLimitLogin"
+	Admin_AddUserIPLimitLogin_FullMethodName          = "/openim.admin.admin/AddUserIPLimitLogin"
+	Admin_DelUserIPLimitLogin_FullMethodName          = "/openim.admin.admin/DelUserIPLimitLogin"
+	Admin_SearchIPForbidden_FullMethodName            = "/openim.admin.admin/SearchIPForbidden"
+	Admin_AddIPForbidden_FullMethodName               = "/openim.admin.admin/AddIPForbidden"
+	Admin_DelIPForbidden_FullMethodName               = "/openim.admin.admin/DelIPForbidden"
+	Admin_CancellationUser_FullMethodName             = "/openim.admin.admin/CancellationUser"
+	Admin_BlockUser_FullMethodName                    = "/openim.admin.admin/BlockUser"
+	Admin_UnblockUser_FullMethodName                  = "/openim.admin.admin/UnblockUser"
+	Admin_SearchBlockUser_FullMethodName              = "/openim.admin.admin/SearchBlockUser"
+	Admin_FindUserBlockInfo_FullMethodName            = "/openim.admin.admin/FindUserBlockInfo"
+	Admin_CheckRegisterForbidden_FullMethodName       = "/openim.admin.admin/CheckRegisterForbidden"
+	Admin_CheckLoginForbidden_FullMethodName          = "/openim.admin.admin/CheckLoginForbidden"
+	Admin_CreateToken_FullMethodName                  = "/openim.admin.admin/CreateToken"
+	Admin_ParseToken_FullMethodName                   = "/openim.admin.admin/ParseToken"
+	Admin_AddApplet_FullMethodName                    = "/openim.admin.admin/AddApplet"
+	Admin_DelApplet_FullMethodName                    = "/openim.admin.admin/DelApplet"
+	Admin_UpdateApplet_FullMethodName                 = "/openim.admin.admin/UpdateApplet"
+	Admin_FindApplet_FullMethodName                   = "/openim.admin.admin/FindApplet"
+	Admin_SearchApplet_FullMethodName                 = "/openim.admin.admin/SearchApplet"
+	Admin_GetClientConfig_FullMethodName              = "/openim.admin.admin/GetClientConfig"
+	Admin_SetClientConfig_FullMethodName              = "/openim.admin.admin/SetClientConfig"
+	Admin_DelClientConfig_FullMethodName              = "/openim.admin.admin/DelClientConfig"
+	Admin_GetUserToken_FullMethodName                 = "/openim.admin.admin/GetUserToken"
+	Admin_InvalidateToken_FullMethodName              = "/openim.admin.admin/InvalidateToken"
+	Admin_LatestApplicationVersion_FullMethodName     = "/openim.admin.admin/LatestApplicationVersion"
+	Admin_AddApplicationVersion_FullMethodName        = "/openim.admin.admin/AddApplicationVersion"
+	Admin_UpdateApplicationVersion_FullMethodName     = "/openim.admin.admin/UpdateApplicationVersion"
+	Admin_DeleteApplicationVersion_FullMethodName     = "/openim.admin.admin/DeleteApplicationVersion"
+	Admin_PageApplicationVersion_FullMethodName       = "/openim.admin.admin/PageApplicationVersion"
+	Admin_AddEnterpriseInfo_FullMethodName            = "/openim.admin.admin/AddEnterpriseInfo"
+	Admin_UpdateEnterpriseInfo_FullMethodName         = "/openim.admin.admin/UpdateEnterpriseInfo"
+	Admin_DeleteEnterpriseInfo_FullMethodName         = "/openim.admin.admin/DeleteEnterpriseInfo"
+	Admin_GetEnterpriseInfo_FullMethodName            = "/openim.admin.admin/GetEnterpriseInfo"
+	Admin_QueryEnterpriseList_FullMethodName          = "/openim.admin.admin/QueryEnterpriseList"
+	Admin_AddProcurementOder_FullMethodName           = "/openim.admin.admin/AddProcurementOder"
+	Admin_UpdateProcurementOder_FullMethodName        = "/openim.admin.admin/UpdateProcurementOder"
+	Admin_DeleteProcurementOder_FullMethodName        = "/openim.admin.admin/DeleteProcurementOder"
+	Admin_GetProcurementOder_FullMethodName           = "/openim.admin.admin/GetProcurementOder"
+	Admin_QueryProcurementOderList_FullMethodName     = "/openim.admin.admin/QueryProcurementOderList"
+	Admin_CountProcurementOderByStatus_FullMethodName = "/openim.admin.admin/CountProcurementOderByStatus"
+	Admin_AddRebateOder_FullMethodName                = "/openim.admin.admin/AddRebateOder"
+	Admin_UpdateRebateOder_FullMethodName             = "/openim.admin.admin/UpdateRebateOder"
+	Admin_DeleteRebateOder_FullMethodName             = "/openim.admin.admin/DeleteRebateOder"
+	Admin_GetRebateOder_FullMethodName                = "/openim.admin.admin/GetRebateOder"
+	Admin_QueryRebateOderList_FullMethodName          = "/openim.admin.admin/QueryRebateOderList"
+	Admin_CountRebateOderByStatus_FullMethodName      = "/openim.admin.admin/CountRebateOderByStatus"
 )
 
 // AdminClient is the client API for Admin service.
@@ -151,6 +163,18 @@ type AdminClient interface {
 	DeleteEnterpriseInfo(ctx context.Context, in *DeleteEnterpriseInfoReq, opts ...grpc.CallOption) (*DeleteEnterpriseInfoResp, error)
 	GetEnterpriseInfo(ctx context.Context, in *GetEnterpriseInfoReq, opts ...grpc.CallOption) (*GetEnterpriseInfoResp, error)
 	QueryEnterpriseList(ctx context.Context, in *QueryEnterpriseListReq, opts ...grpc.CallOption) (*QueryEnterpriseListResp, error)
+	AddProcurementOder(ctx context.Context, in *AddProcurementOderReq, opts ...grpc.CallOption) (*AddProcurementOderResp, error)
+	UpdateProcurementOder(ctx context.Context, in *UpdateProcurementOderReq, opts ...grpc.CallOption) (*UpdateProcurementOderResp, error)
+	DeleteProcurementOder(ctx context.Context, in *DeleteProcurementOderReq, opts ...grpc.CallOption) (*DeleteProcurementOderResp, error)
+	GetProcurementOder(ctx context.Context, in *GetProcurementOderReq, opts ...grpc.CallOption) (*GetProcurementOderResp, error)
+	QueryProcurementOderList(ctx context.Context, in *QueryProcurementOderListReq, opts ...grpc.CallOption) (*QueryProcurementOderListResp, error)
+	CountProcurementOderByStatus(ctx context.Context, in *CountProcurementOderByStatusReq, opts ...grpc.CallOption) (*CountProcurementOderByStatusResp, error)
+	AddRebateOder(ctx context.Context, in *AddRebateOderReq, opts ...grpc.CallOption) (*AddRebateOderResp, error)
+	UpdateRebateOder(ctx context.Context, in *UpdateRebateOderReq, opts ...grpc.CallOption) (*UpdateRebateOderResp, error)
+	DeleteRebateOder(ctx context.Context, in *DeleteRebateOderReq, opts ...grpc.CallOption) (*DeleteRebateOderResp, error)
+	GetRebateOder(ctx context.Context, in *GetRebateOderReq, opts ...grpc.CallOption) (*GetRebateOderResp, error)
+	QueryRebateOderList(ctx context.Context, in *QueryRebateOderListReq, opts ...grpc.CallOption) (*QueryRebateOderListResp, error)
+	CountRebateOderByStatus(ctx context.Context, in *CountRebateOderByStatusReq, opts ...grpc.CallOption) (*CountRebateOderByStatusResp, error)
 }
 
 type adminClient struct {
@@ -731,6 +755,126 @@ func (c *adminClient) QueryEnterpriseList(ctx context.Context, in *QueryEnterpri
 	return out, nil
 }
 
+func (c *adminClient) AddProcurementOder(ctx context.Context, in *AddProcurementOderReq, opts ...grpc.CallOption) (*AddProcurementOderResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddProcurementOderResp)
+	err := c.cc.Invoke(ctx, Admin_AddProcurementOder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) UpdateProcurementOder(ctx context.Context, in *UpdateProcurementOderReq, opts ...grpc.CallOption) (*UpdateProcurementOderResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateProcurementOderResp)
+	err := c.cc.Invoke(ctx, Admin_UpdateProcurementOder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) DeleteProcurementOder(ctx context.Context, in *DeleteProcurementOderReq, opts ...grpc.CallOption) (*DeleteProcurementOderResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteProcurementOderResp)
+	err := c.cc.Invoke(ctx, Admin_DeleteProcurementOder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) GetProcurementOder(ctx context.Context, in *GetProcurementOderReq, opts ...grpc.CallOption) (*GetProcurementOderResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetProcurementOderResp)
+	err := c.cc.Invoke(ctx, Admin_GetProcurementOder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) QueryProcurementOderList(ctx context.Context, in *QueryProcurementOderListReq, opts ...grpc.CallOption) (*QueryProcurementOderListResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(QueryProcurementOderListResp)
+	err := c.cc.Invoke(ctx, Admin_QueryProcurementOderList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) CountProcurementOderByStatus(ctx context.Context, in *CountProcurementOderByStatusReq, opts ...grpc.CallOption) (*CountProcurementOderByStatusResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CountProcurementOderByStatusResp)
+	err := c.cc.Invoke(ctx, Admin_CountProcurementOderByStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) AddRebateOder(ctx context.Context, in *AddRebateOderReq, opts ...grpc.CallOption) (*AddRebateOderResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AddRebateOderResp)
+	err := c.cc.Invoke(ctx, Admin_AddRebateOder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) UpdateRebateOder(ctx context.Context, in *UpdateRebateOderReq, opts ...grpc.CallOption) (*UpdateRebateOderResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateRebateOderResp)
+	err := c.cc.Invoke(ctx, Admin_UpdateRebateOder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) DeleteRebateOder(ctx context.Context, in *DeleteRebateOderReq, opts ...grpc.CallOption) (*DeleteRebateOderResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteRebateOderResp)
+	err := c.cc.Invoke(ctx, Admin_DeleteRebateOder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) GetRebateOder(ctx context.Context, in *GetRebateOderReq, opts ...grpc.CallOption) (*GetRebateOderResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetRebateOderResp)
+	err := c.cc.Invoke(ctx, Admin_GetRebateOder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) QueryRebateOderList(ctx context.Context, in *QueryRebateOderListReq, opts ...grpc.CallOption) (*QueryRebateOderListResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(QueryRebateOderListResp)
+	err := c.cc.Invoke(ctx, Admin_QueryRebateOderList_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *adminClient) CountRebateOderByStatus(ctx context.Context, in *CountRebateOderByStatusReq, opts ...grpc.CallOption) (*CountRebateOderByStatusResp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CountRebateOderByStatusResp)
+	err := c.cc.Invoke(ctx, Admin_CountRebateOderByStatus_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AdminServer is the server API for Admin service.
 // All implementations must embed UnimplementedAdminServer
 // for forward compatibility.
@@ -804,6 +948,18 @@ type AdminServer interface {
 	DeleteEnterpriseInfo(context.Context, *DeleteEnterpriseInfoReq) (*DeleteEnterpriseInfoResp, error)
 	GetEnterpriseInfo(context.Context, *GetEnterpriseInfoReq) (*GetEnterpriseInfoResp, error)
 	QueryEnterpriseList(context.Context, *QueryEnterpriseListReq) (*QueryEnterpriseListResp, error)
+	AddProcurementOder(context.Context, *AddProcurementOderReq) (*AddProcurementOderResp, error)
+	UpdateProcurementOder(context.Context, *UpdateProcurementOderReq) (*UpdateProcurementOderResp, error)
+	DeleteProcurementOder(context.Context, *DeleteProcurementOderReq) (*DeleteProcurementOderResp, error)
+	GetProcurementOder(context.Context, *GetProcurementOderReq) (*GetProcurementOderResp, error)
+	QueryProcurementOderList(context.Context, *QueryProcurementOderListReq) (*QueryProcurementOderListResp, error)
+	CountProcurementOderByStatus(context.Context, *CountProcurementOderByStatusReq) (*CountProcurementOderByStatusResp, error)
+	AddRebateOder(context.Context, *AddRebateOderReq) (*AddRebateOderResp, error)
+	UpdateRebateOder(context.Context, *UpdateRebateOderReq) (*UpdateRebateOderResp, error)
+	DeleteRebateOder(context.Context, *DeleteRebateOderReq) (*DeleteRebateOderResp, error)
+	GetRebateOder(context.Context, *GetRebateOderReq) (*GetRebateOderResp, error)
+	QueryRebateOderList(context.Context, *QueryRebateOderListReq) (*QueryRebateOderListResp, error)
+	CountRebateOderByStatus(context.Context, *CountRebateOderByStatusReq) (*CountRebateOderByStatusResp, error)
 	mustEmbedUnimplementedAdminServer()
 }
 
@@ -984,6 +1140,42 @@ func (UnimplementedAdminServer) GetEnterpriseInfo(context.Context, *GetEnterpris
 }
 func (UnimplementedAdminServer) QueryEnterpriseList(context.Context, *QueryEnterpriseListReq) (*QueryEnterpriseListResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryEnterpriseList not implemented")
+}
+func (UnimplementedAdminServer) AddProcurementOder(context.Context, *AddProcurementOderReq) (*AddProcurementOderResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddProcurementOder not implemented")
+}
+func (UnimplementedAdminServer) UpdateProcurementOder(context.Context, *UpdateProcurementOderReq) (*UpdateProcurementOderResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateProcurementOder not implemented")
+}
+func (UnimplementedAdminServer) DeleteProcurementOder(context.Context, *DeleteProcurementOderReq) (*DeleteProcurementOderResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteProcurementOder not implemented")
+}
+func (UnimplementedAdminServer) GetProcurementOder(context.Context, *GetProcurementOderReq) (*GetProcurementOderResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProcurementOder not implemented")
+}
+func (UnimplementedAdminServer) QueryProcurementOderList(context.Context, *QueryProcurementOderListReq) (*QueryProcurementOderListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryProcurementOderList not implemented")
+}
+func (UnimplementedAdminServer) CountProcurementOderByStatus(context.Context, *CountProcurementOderByStatusReq) (*CountProcurementOderByStatusResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CountProcurementOderByStatus not implemented")
+}
+func (UnimplementedAdminServer) AddRebateOder(context.Context, *AddRebateOderReq) (*AddRebateOderResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddRebateOder not implemented")
+}
+func (UnimplementedAdminServer) UpdateRebateOder(context.Context, *UpdateRebateOderReq) (*UpdateRebateOderResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateRebateOder not implemented")
+}
+func (UnimplementedAdminServer) DeleteRebateOder(context.Context, *DeleteRebateOderReq) (*DeleteRebateOderResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteRebateOder not implemented")
+}
+func (UnimplementedAdminServer) GetRebateOder(context.Context, *GetRebateOderReq) (*GetRebateOderResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRebateOder not implemented")
+}
+func (UnimplementedAdminServer) QueryRebateOderList(context.Context, *QueryRebateOderListReq) (*QueryRebateOderListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method QueryRebateOderList not implemented")
+}
+func (UnimplementedAdminServer) CountRebateOderByStatus(context.Context, *CountRebateOderByStatusReq) (*CountRebateOderByStatusResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CountRebateOderByStatus not implemented")
 }
 func (UnimplementedAdminServer) mustEmbedUnimplementedAdminServer() {}
 func (UnimplementedAdminServer) testEmbeddedByValue()               {}
@@ -2032,6 +2224,222 @@ func _Admin_QueryEnterpriseList_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Admin_AddProcurementOder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddProcurementOderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).AddProcurementOder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_AddProcurementOder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).AddProcurementOder(ctx, req.(*AddProcurementOderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_UpdateProcurementOder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateProcurementOderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).UpdateProcurementOder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_UpdateProcurementOder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).UpdateProcurementOder(ctx, req.(*UpdateProcurementOderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_DeleteProcurementOder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteProcurementOderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).DeleteProcurementOder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_DeleteProcurementOder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).DeleteProcurementOder(ctx, req.(*DeleteProcurementOderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_GetProcurementOder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProcurementOderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).GetProcurementOder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_GetProcurementOder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).GetProcurementOder(ctx, req.(*GetProcurementOderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_QueryProcurementOderList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryProcurementOderListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).QueryProcurementOderList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_QueryProcurementOderList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).QueryProcurementOderList(ctx, req.(*QueryProcurementOderListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_CountProcurementOderByStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CountProcurementOderByStatusReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).CountProcurementOderByStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_CountProcurementOderByStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).CountProcurementOderByStatus(ctx, req.(*CountProcurementOderByStatusReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_AddRebateOder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddRebateOderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).AddRebateOder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_AddRebateOder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).AddRebateOder(ctx, req.(*AddRebateOderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_UpdateRebateOder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRebateOderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).UpdateRebateOder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_UpdateRebateOder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).UpdateRebateOder(ctx, req.(*UpdateRebateOderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_DeleteRebateOder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRebateOderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).DeleteRebateOder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_DeleteRebateOder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).DeleteRebateOder(ctx, req.(*DeleteRebateOderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_GetRebateOder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRebateOderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).GetRebateOder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_GetRebateOder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).GetRebateOder(ctx, req.(*GetRebateOderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_QueryRebateOderList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(QueryRebateOderListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).QueryRebateOderList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_QueryRebateOderList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).QueryRebateOderList(ctx, req.(*QueryRebateOderListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Admin_CountRebateOderByStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CountRebateOderByStatusReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AdminServer).CountRebateOderByStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Admin_CountRebateOderByStatus_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AdminServer).CountRebateOderByStatus(ctx, req.(*CountRebateOderByStatusReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Admin_ServiceDesc is the grpc.ServiceDesc for Admin service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2266,6 +2674,54 @@ var Admin_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QueryEnterpriseList",
 			Handler:    _Admin_QueryEnterpriseList_Handler,
+		},
+		{
+			MethodName: "AddProcurementOder",
+			Handler:    _Admin_AddProcurementOder_Handler,
+		},
+		{
+			MethodName: "UpdateProcurementOder",
+			Handler:    _Admin_UpdateProcurementOder_Handler,
+		},
+		{
+			MethodName: "DeleteProcurementOder",
+			Handler:    _Admin_DeleteProcurementOder_Handler,
+		},
+		{
+			MethodName: "GetProcurementOder",
+			Handler:    _Admin_GetProcurementOder_Handler,
+		},
+		{
+			MethodName: "QueryProcurementOderList",
+			Handler:    _Admin_QueryProcurementOderList_Handler,
+		},
+		{
+			MethodName: "CountProcurementOderByStatus",
+			Handler:    _Admin_CountProcurementOderByStatus_Handler,
+		},
+		{
+			MethodName: "AddRebateOder",
+			Handler:    _Admin_AddRebateOder_Handler,
+		},
+		{
+			MethodName: "UpdateRebateOder",
+			Handler:    _Admin_UpdateRebateOder_Handler,
+		},
+		{
+			MethodName: "DeleteRebateOder",
+			Handler:    _Admin_DeleteRebateOder_Handler,
+		},
+		{
+			MethodName: "GetRebateOder",
+			Handler:    _Admin_GetRebateOder_Handler,
+		},
+		{
+			MethodName: "QueryRebateOderList",
+			Handler:    _Admin_QueryRebateOderList_Handler,
+		},
+		{
+			MethodName: "CountRebateOderByStatus",
+			Handler:    _Admin_CountRebateOderByStatus_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
