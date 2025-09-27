@@ -17,9 +17,7 @@ import (
 // Add
 
 func (o *adminServer) AddRebateOder(ctx context.Context, req *adminpb.AddRebateOderReq) (*adminpb.AddRebateOderResp, error) {
-	if _, err := mctx.CheckAdmin(ctx); err != nil {
-		return nil, err
-	}
+
 	orderID, err := o.newReadableRebateOrderID(ctx)
 	if err != nil {
 		log.ZWarn(ctx, "generate rebate order id failed", err)

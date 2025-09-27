@@ -14,9 +14,6 @@ import (
 // ---------- Add ----------
 
 func (o *adminServer) AddProcurementOder(ctx context.Context, req *adminpb.AddProcurementOderReq) (*adminpb.AddProcurementOderResp, error) {
-	if _, err := mctx.CheckAdmin(ctx); err != nil {
-		return nil, err
-	}
 
 	orderID, err := util.NewReadableOrderID(ctx)
 	if err != nil {
