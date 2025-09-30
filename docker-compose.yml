@@ -11,6 +11,8 @@ services:
       - "11003:3000"
     networks:
       - chat
+    environment:
+      - TZ=Asia/Shanghai
 
   lark-tower-admin-front:
     image: lark-tower-admin-front:latest
@@ -21,4 +23,5 @@ services:
     networks:
       - chat
     environment:
+      - TZ=Asia/Shanghai
       - BASE_PATH=admin-web
